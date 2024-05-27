@@ -1,0 +1,90 @@
+﻿key,en,cn,jp
+AppName_PowerMonitor,PowerMonitor,电源监视,パワーモニター
+AppName_Waveform,Waveform,波形,波形
+AppName_Files,Files,文件,ファイル
+AppName_Settings,Settings,设置,設定
+AppSettings_Option_Display,Display,显示屏,ディスプレイ
+AppSettings_Option_Buzzer,Buzzer,蜂鸣器,ブザー
+AppSettings_Option_Network,Network,网络,ネットワーク
+AppSettings_Option_OTA,OTA Upgrade,OTA升级,OTAアップグレード
+AppSettings_Option_About,About,关于,情報
+AppSettings_Option_Quit,Quit,退出,終了
+AppSettings_Option_Back,Back,返回,戻る
+AppSettings_Option_Brightness,Brightness,亮度,明るさ
+AppSettings_Option_RefreshRate,Refresh Rate,刷新率,リフレッシュ レート
+AppSettings_Option_Orientation,Rotation,方向,オリエンテーション
+AppSettings_Option_Normal,Normal,正常,ノーマル
+AppSettings_Option_High,High,高速,ハイ
+AppSettings_Option_Encoder,Encoder,编码器,エンコーダー
+AppSettings_Option_Forward,Forward,正向,フォワード
+AppSettings_Option_Reverse,Reverse,反向,リバース
+AppSettings_Option_Calibration,Calibration,校准,キャリブレーション
+AppSettings_Option_On,ON,打开,オン
+AppSettings_Option_Off,OFF,关闭,オフ
+AppSettings_Notice_Saving,Save Changes?,是否保存更改?,変更を保存しますか？
+AppSettings_Notice_RunOTA,Run OTA Upgrade?,运行OTA升级?,OTAアップグレードを実行するか?
+AppSettings_Option_Yes,Yes,是,はい
+AppSettings_Option_No,No,否,いいえ
+AppSettings_Option_Language,Language,语言,言語
+AppSettings_Option_English,English,英文,英語
+AppSettings_Option_Chinese,Chinese,中文,中国語
+AppSettings_Option_Japanese,Japanese,日文,日本語
+AppSettings_Option_StartupImage,Startup Image,启动画面,起動ロゴ
+AppSettings_Option_Default,Default,默认,デフォルト
+AppFiles_Option_RecordFiles,Record files,录制文件,レコードファイル
+AppFiles_Option_MscMode,MSC mode,MSC 模式,MSCモード
+AppFiles_Option_Open,Open,打开,開く
+AppFiles_Option_Upload,Upload (EzData),上传 (EzData),アップロード
+AppFiles_Option_Delete,Delete,删除,削除
+AppPowerMonitor_PageSingle_InputVolt,Input Volt.,输入电压,入力電圧
+AppPowerMonitor_PageSingle_InputPower,Input Pow,输入功率,入力パワー
+AppPowerMonitor_PageSingle_OutputCurrent,Output Cur.,输出电流,出力電流
+AppPowerMonitor_PageSingle_ShuntVolt,Shunt Volt.,分流电压,分路電圧
+AppPowerMonitor_PageSimpleDetail_Voltage,Voltage,电压,電圧
+AppPowerMonitor_PageSimpleDetail_Current,Current,电流,電流
+AppPowerMonitor_PageSimpleDetail_Power,Power,功率,パワー
+AppPowerMonitor_PageSimpleDetail_Time,Time,系统时间,時間
+AppPowerMonitor_PageMoreDetail_Avg_PerS,Avg. (1s),平均 (1s),平均 (1s)
+AppPowerMonitor_PageMoreDetail_Avg_HighLight,Avg.,平均,平均
+AppPowerMonitor_PageMoreDetail_Avg_PerMin,Avg. (1min),平均 (1min),平均 (1min)
+AppPowerMonitor_PageMoreDetail_Avg_Total,Avg. (total),平均 (总计),平均 (合計)
+AppPowerMonitor_PageMoreDetail_Cur_HighLight,Curr.,电流,電流
+AppPowerMonitor_PageMoreDetail_Cur_Peak,Curr. (Peak),电流 (峰值),電流 (Peak)
+AppPowerMonitor_PageMoreDetail_Cur_Min,Curr. (Min),电流 (谷值),電流 (Min)
+AppPowerMonitor_PageMoreDetail_Capacity,Capacity,容量,容量
+AppPowerMonitor_PageMoreDetail_Energy,Energy,能量,エネルギー
+AppWaveform_Waitting,WAITING,等待触发,待機中
+AppWaveform_Saving,SAVING,保存中,セーブ中
+AppWaveform_Config_TriggerMode,TriggerMode,触发模式,トリガーモード
+AppWaveform_Config_Threshold,Threshold,阈值,閾値
+AppWaveform_Config_RecTime,Record Time,录制时间,レコードタイム
+AppWaveform_Mode_Manual,Manual,手动,マニュアル
+AppWaveform_Mode_VHL,Vol. High Level,电压高电平,電圧ハイレベル
+AppWaveform_Mode_VLL,Vol. Low Level,电压低电平,電圧ローレベル
+AppWaveform_Mode_CHL,Cur. High Level,电流高电平,電流ハイレベル
+AppWaveform_Mode_CLL,Cur. Low Level,电流低电平,電流ローレベル
+Misc_FirmwareInfo,Firmware Info,固件信息,ファームウェア情報
+Misc_Version,Version,版本,バージョン
+Misc_Type,type,类型,タイプ
+Misc_CompileDate,Compile date,编译时间,コンパイル時間
+Misc_RebootNow,Reboot now?,马上重启?,再起動しますか?
+Misc_Notice,Notice,提示,ヒント
+Misc_Text_ClickToConfig,Click to config,点击配置,クリックして設定
+Misc_Text_ClickToContinue,Click to continue,点击继续,クリックして続行
+Misc_Text_ClickToFinish,Click to finish,点击完成,クリックして終了
+Misc_Text_ClickToQuit,Click to quit,点击退出,クリックして終了
+Misc_Text_ConnectTopUsb,Connect the top USB port to the PC,连接顶部USB到电脑,上部のUSBポートをPCに接続してください
+Misc_Text_OpenNewUsbDrive,Open the newly added USB drive,打开新弹出的U盘,新しく追加されたUSBドライブを開く
+Misc_Text_EditWiFiConfig,Edit your WiFi config,编辑WiFi配置,Wi-Fi 設定を編集してください
+Misc_Text_IsAlreadyLatest,You are already\nOn the latest version,已是最新版本,最新バージョンです
+Misc_Text_LatestVersion,Latest version,最新版本,最新バージョン
+Misc_Text_ClickToUpgrade,Click to upgrade,点击升级,クリックしてアップグレード
+Misc_Text_OnlyConnect,Only connect,只连接,このUSBポートに
+Misc_Text_ThisUsbPort,this USB port,这个USB口,接続してください
+Misc_Text_CalibrationDone,Calibration done,校准完成,校正完了
+Misc_Text_NoRecordFiles,No record files,没有录制文件,記録ファイルがありません
+Misc_Text_UploadDone,Upload done!,上传完成!,アップロード完了!
+Misc_Text_UpgradeDone,Upgrade done!,升级完成!,アップグレード完了!
+Misc_Text_UsbFlashingNotice, > USB flashing is required\n > Please upgrade\n    using [M5Burner]\n > And backup your record\n    files before upgrade, > 该版本需要线刷\n > 请使用 [M5Burner] 进行升级\n > 并在升级前备份好录制文件, > USB フラッシングが必要です\n > [M5Burner] を使用して、\n   アップグレードしてください\n > あなたの記録ファイルを\n   バックアップしてください
+Misc_Text_ConnectAp,Connect AP,连接热点,接続 AP
+Misc_Text_OpenLink,Open the link,打开链接,リンクを開く
