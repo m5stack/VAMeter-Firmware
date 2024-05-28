@@ -24,12 +24,8 @@ sudo apt install build-essential cmake
 mkdir build && cd build
 ```
 ```bash
-cmake ..
+cmake .. && make -j8
 ```
-```bash
-make -j8
-```
-
 #### Run
 
 ```bash
