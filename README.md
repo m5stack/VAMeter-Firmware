@@ -33,7 +33,7 @@ Firmware source code of [VA Meter](https://docs.m5stack.com/en/products/sku/K136
 python ./fetch_repos.py
 ```
 
-### Desktop Build
+## Desktop Build
 
 #### Tool Chains
 
@@ -55,7 +55,7 @@ cmake .. && make -j8
 cd desktop && ./app_desktop_build
 ```
 
-### IDF Build
+## IDF Build
 
 #### Tool Chains
 
