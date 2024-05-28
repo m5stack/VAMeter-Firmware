@@ -1,13 +1,8 @@
-/**
- * @file hal_encoder.cpp
- * @author Forairaaaaa
- * @brief Ref: https://github.com/madhephaestus/ESP32Encoder/tree/master
- * @version 0.1
- * @date 2023-12-14
- *
- * @copyright Copyright (c) 2023
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #include "../hal_vameter.h"
 #include "../hal_config.h"
 #include <mooncake.h>

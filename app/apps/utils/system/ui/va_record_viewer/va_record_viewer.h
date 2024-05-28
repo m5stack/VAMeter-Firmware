@@ -1,13 +1,8 @@
-/**
- * @file va_record_viewer.h
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-03-21
- *
- * @copyright Copyright (c) 2024
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #pragma once
 #include "../../../../../hal/hal.h"
 #include <cstdint>

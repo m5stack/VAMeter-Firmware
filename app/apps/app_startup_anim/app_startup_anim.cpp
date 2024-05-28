@@ -1,13 +1,8 @@
-/**
- * @file app_startup_anim.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-04-17
- *
- * @copyright Copyright (c) 2024
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #include "app_startup_anim.h"
 #include "../../hal/hal.h"
 #include "../../assets/assets.h"

@@ -1,13 +1,8 @@
-/**
- * @file qrcode.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-05-08
- *
- * @copyright Copyright (c) 2024
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 // Ref: https://github.com/nayuki/QR-Code-generator/blob/master/cpp/QrCodeGeneratorDemo.cpp
 #include "qrcode.h"
 #include "qrcodegen/qrcodegen.hpp"

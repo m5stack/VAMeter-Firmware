@@ -1,13 +1,8 @@
-/**
- * @file tusb_msc.c
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-03-13
- *
- * @copyright Copyright (c) 2024
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #include "tusb_msc.h"
 #include "../wear_levelling/wear_levelling.h"
 

@@ -1,13 +1,8 @@
-/**
- * @file select_menu_page.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-03-13
- *
- * @copyright Copyright (c) 2024
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #include "select_menu_page.h"
 #include "../../../../../assets/assets.h"
 #include "../../inputs/inputs.h"

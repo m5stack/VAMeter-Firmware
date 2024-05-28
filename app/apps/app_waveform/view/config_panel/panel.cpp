@@ -1,13 +1,8 @@
-/**
- * @file config_panel.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-05-20
- *
- * @copyright Copyright (c) 2024
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #include "config_panel.h"
 #include <cstring>
 #include <mooncake.h>

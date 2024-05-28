@@ -1,13 +1,8 @@
-/**
- * @file button.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-03-05
- *
- * @copyright Copyright (c) 2024
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #include "button.h"
 #include "../../../../../hal/hal.h"
 

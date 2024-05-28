@@ -1,13 +1,8 @@
-/**
- * @file assets.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-04-15
- *
- * @copyright Copyright (c) 2024
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #include "assets.h"
 #include "localization/types.h"
 #include <cstdint>

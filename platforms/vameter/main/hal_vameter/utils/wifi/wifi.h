@@ -1,13 +1,8 @@
-/**
- * @file wifi.h
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-03-28
- *
- * @copyright Copyright (c) 2024
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #include <stdint.h>
 // https://github.com/espressif/esp-idf/blob/v5.1.3/examples/wifi/getting_started/station/main/station_example_main.c
 

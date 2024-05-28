@@ -1,13 +1,8 @@
-/**
- * @file app_base_test.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2023-11-04
- *
- * @copyright Copyright (c) 2023
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #include "app_base_test.h"
 #include "../../hal/hal.h"
 #include "../utils/system/system.h"

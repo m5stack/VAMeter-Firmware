@@ -1,13 +1,8 @@
-/**
- * @file tetris.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2023-11-20
- *
- * @copyright Copyright (c) 2023
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #include "../easter_egg.h"
 #include "../../../../hal/hal.h"
 #include "../raylib/raylib.h"

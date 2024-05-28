@@ -1,13 +1,8 @@
-/**
- * @file hal_vameter.h
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2023-12-14
- *
- * @copyright Copyright (c) 2023
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #pragma once
 #include <hal/hal.h>
 

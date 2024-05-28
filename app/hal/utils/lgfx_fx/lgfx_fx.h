@@ -1,13 +1,8 @@
-/**
- * @file lgfx_fx.hpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2023-11-11
- *
- * @copyright Copyright (c) 2023
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #pragma once
 #include <LovyanGFX.hpp>
 #include <cstdint>

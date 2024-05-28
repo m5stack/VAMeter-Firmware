@@ -1,13 +1,8 @@
-/**
- * @file app.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-04-21
- *
- * @copyright Copyright (c) 2024
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #include "app.h"
 #include <mooncake.h>
 #include "assets/assets.h"

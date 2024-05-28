@@ -1,13 +1,8 @@
-/**
- * @file hal_watch_dog.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-01-17
- *
- * @copyright Copyright (c) 2024
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #include "../hal_vameter.h"
 #include "../hal_config.h"
 #include "esp_system.h"

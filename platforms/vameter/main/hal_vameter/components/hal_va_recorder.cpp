@@ -1,13 +1,8 @@
-/**
- * @file hal_va_recorder.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-03-14
- *
- * @copyright Copyright (c) 2024
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #include "../hal_vameter.h"
 #include "../hal_config.h"
 #include <mooncake.h>

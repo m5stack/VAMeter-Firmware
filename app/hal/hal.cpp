@@ -1,13 +1,8 @@
-/**
- * @file hal.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2023-11-04
- *
- * @copyright Copyright (c) 2023
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #include "hal.h"
 #include <mooncake.h>
 #include "../assets/assets.h"

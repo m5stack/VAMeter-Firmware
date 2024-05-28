@@ -1,13 +1,8 @@
-/**
- * @file view.h
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-02-27
- *
- * @copyright Copyright (c) 2024
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #pragma once
 #include "misc/water_wave_generator/water_wave_generator.h"
 #include <functional>

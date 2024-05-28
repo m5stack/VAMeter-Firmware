@@ -1,13 +1,8 @@
-/**
- * @file triggers.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-03-19
- *
- * @copyright Copyright (c) 2024
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #include "triggers.h"
 
 /* -------------------------------------------------------------------------- */

@@ -1,13 +1,8 @@
-/**
- * @file app_remote.h
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-03-06
- *
- * @copyright Copyright (c) 2024
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #include <cstdint>
 #include <mooncake.h>
 

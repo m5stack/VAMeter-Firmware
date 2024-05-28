@@ -1,13 +1,8 @@
-/**
- * @file hal_i2c.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2023-12-15
- *
- * @copyright Copyright (c) 2023
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #include "../hal_vameter.h"
 #include "../hal_config.h"
 #include <mooncake.h>

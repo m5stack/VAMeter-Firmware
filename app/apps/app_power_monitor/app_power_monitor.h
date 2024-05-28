@@ -1,13 +1,8 @@
-/**
- * @file app_power_monitor.h
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-02-26
- *
- * @copyright Copyright (c) 2024
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #include "view/view.h"
 #include <cstdint>
 #include <mooncake.h>

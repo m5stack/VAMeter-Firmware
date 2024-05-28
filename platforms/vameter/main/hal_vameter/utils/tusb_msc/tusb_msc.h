@@ -1,13 +1,8 @@
-/**
- * @file tusb_msc.h
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-03-13
- *
- * @copyright Copyright (c) 2024
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #pragma once
 #include "stdint.h"
 // https://github.com/espressif/esp-idf/tree/v5.1.3/examples/peripherals/usb/device/tusb_msc

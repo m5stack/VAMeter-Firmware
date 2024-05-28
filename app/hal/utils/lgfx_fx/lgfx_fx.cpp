@@ -1,13 +1,8 @@
-/**
- * @file lgfx_fx.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2023-11-11
- *
- * @copyright Copyright (c) 2023
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #include "lgfx_fx.h"
 
 void LGFX_SpriteFx::drawFastHLineInDifference(int32_t x, int32_t y, int32_t w)

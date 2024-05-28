@@ -1,13 +1,8 @@
-/**
- * @file startup_image.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-04-23
- *
- * @copyright Copyright (c) 2024
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #include "../app_settings.h"
 #include "../../../hal/hal.h"
 #include "../../utils/system/system.h"

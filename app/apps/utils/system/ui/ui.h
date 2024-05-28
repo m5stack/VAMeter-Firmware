@@ -1,13 +1,8 @@
-/**
- * @file ui.h
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2023-11-10
- *
- * @copyright Copyright (c) 2023
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #pragma once
 #include "select_menu_page/select_menu_page.h"
 #include "wave_progress_bar_page/wave_progress_bar_page.h"

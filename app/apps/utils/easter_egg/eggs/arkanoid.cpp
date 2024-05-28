@@ -1,13 +1,8 @@
-/**
- * @file arkanoid.cpp
- * @author Forairaaaaa
- * @brief Ref: https://github.com/raysan5/raylib-games/blob/master/classics/src/arkanoid.c
- * @version 0.1
- * @date 2023-11-13
- *
- * @copyright Copyright (c) 2023
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #include "../easter_egg.h"
 #include "../../../../hal/hal.h"
 #include "../raylib/raylib.h"

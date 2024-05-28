@@ -1,13 +1,8 @@
-/**
- * @file raylib.h
- * @author Forairaaaaa
- * @brief Ref: https://www.raylib.com/cheatsheet/cheatsheet.html
- * @version 0.1
- * @date 2023-11-13
- *
- * @copyright Copyright (c) 2023
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #pragma once
 #include <cstdint>
 

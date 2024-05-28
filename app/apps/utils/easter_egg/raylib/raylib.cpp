@@ -1,13 +1,8 @@
-/**
- * @file raylib.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2023-11-13
- *
- * @copyright Copyright (c) 2023
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #include "raylib.h"
 #include "../../../../hal/hal.h"
 #include "../../../../assets/assets.h"

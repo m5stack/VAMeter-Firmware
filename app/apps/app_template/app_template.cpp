@@ -1,13 +1,8 @@
-/**
- * @file app_template.cpp
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date <date></date>
- *
- * @copyright Copyright (c) 2024
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #include "app_template.h"
 #include "../../hal/hal.h"
 #include "../../assets/assets.h"

@@ -1,13 +1,8 @@
-/**
- * @file select_menu_page.h
- * @author Forairaaaaa
- * @brief
- * @version 0.1
- * @date 2024-03-13
- *
- * @copyright Copyright (c) 2024
- *
- */
+/*
+* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+*
+* SPDX-License-Identifier: MIT
+*/
 #pragma once
 #include <smooth_ui_toolkit.h>
 #include <cstdint>
