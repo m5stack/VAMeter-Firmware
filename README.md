@@ -2,6 +2,29 @@
 
 Firmware source code of [VA Meter](https://docs.m5stack.com/en/products/sku/K136).
 
+## Tree
+
+```bash
+.
+├── app
+│   ├── apps                    # Apps
+│   │   ├── app_files
+│   │   ├── app_launcher
+│   │   ├── app_power_monitor
+│   │   ├── app_settings
+│   │   ├── app_startup_anim
+│   │   ├── app_template
+│   │   ├── app_waveform
+│   │   └── utils
+│   ├── assets                  # Asset Pool
+│   └── hal                     # HAL defines
+└── platforms
+    ├── desktop                 # Desktop project
+    └── vameter                 # IDF project
+```
+
+
+
 ## Build
 
 ### Fetch Dependencies
