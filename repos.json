@@ -2,7 +2,7 @@
     {
         "url": "https://github.com/Forairaaaaa/smooth_ui_toolkit.git",
         "path": "dependencies/smooth_ui_toolkit",
-        "branch": "main"
+        "branch": "v1.1.0"
     },
     {
         "url": "https://github.com/lovyan03/LovyanGFX.git",
@@ -12,7 +12,7 @@
     {
         "url": "https://github.com/Forairaaaaa/mooncake.git",
         "path": "dependencies/mooncake",
-        "branch": "main"
+        "branch": "v1.2"
     },
     {
         "url": "https://github.com/bblanchon/ArduinoJson.git",
@@ -22,16 +22,16 @@
     {
         "url": "https://github.com/Forairaaaaa/arduino_lite.git",
         "path": "platforms/vameter/components/arduino-esp32",
-        "branch": "main"
+        "branch": "v3.0.0-rc3"
     },
     {
         "url": "https://github.com/Forairaaaaa/ESP32Encoder.git",
         "path": "platforms/vameter/components/ESP32Encoder",
-        "branch": "master"
+        "branch": "vameter-bk"
     },
     {
         "url": "https://github.com/Forairaaaaa/PsychicHttp.git",
         "path": "platforms/vameter/components/PsychicHttp",
-        "branch": "master"
+        "branch": "vameter-bk"
     }
 ]
