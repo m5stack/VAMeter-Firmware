@@ -17,7 +17,7 @@ BinPackParameters: false
 AlwaysBreakTemplateDeclarations: Yes
 SortIncludes: false
 # AllowShortBlocksOnASingleLine: Always
-# AllowShortCaseLabelsOnASingleLine: false
+# AllowShortCaseLabelsOnASingleLine: false 
 
 ---
 Language: JavaScript

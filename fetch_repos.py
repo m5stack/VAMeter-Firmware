@@ -15,14 +15,6 @@ def clone_or_update_repo(repo_url, path, branch):
 
     subprocess.run(command)
 
-    # if os.path.exists(path):
-    #     print("path exists, pass")
-    #     return
-    # else:
-    #     subprocess.run(["git", "clone", "-b", branch,
-    #                    repo_url, path], check=True)
-
-
 def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     config_path = os.path.join(script_dir, 'repos.json')
