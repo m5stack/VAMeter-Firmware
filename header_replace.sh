@@ -42,4 +42,4 @@ done
 # 清理临时文件
 rm -f "$TEMP_FILE"
 
-echo "Replacement complete."
+echo "Replacement complete"
