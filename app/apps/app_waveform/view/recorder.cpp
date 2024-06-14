@@ -69,6 +69,11 @@ void WaveFormRecorder::update()
         break;
     }
 
+    if (Button::Encoder()->wasHold())
+    {
+      HAL::SetBaseRelay(!HAL::GetBaseRelayState());
+    }
+
     // Check quit
     if (Button::Side()->wasHold())
         _data.want_to_quit = true;

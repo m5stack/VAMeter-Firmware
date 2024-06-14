@@ -90,6 +90,11 @@ void PmDataPage::update(uint32_t currentTime)
             _render();
         }
 
+        if (Button::Encoder()->wasHold())
+        {
+            HAL::SetBaseRelay(!HAL::GetBaseRelayState());
+        }
+
         // Check quit
         if (Button::Side()->wasHold())
         {
