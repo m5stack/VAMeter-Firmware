@@ -26,6 +26,7 @@ private:
     std::vector<std::string> _ls(const std::string& path);
     void _config_check_valid();
     std::string _create_config_json();
+    void _backup_config_file();
     void _log_out_system_config();
     void _fs_get_new_rec_file_path(char* recFilePath, size_t bufferSize);
     std::string _fs_get_rec_file_path(const std::string& recordName);
