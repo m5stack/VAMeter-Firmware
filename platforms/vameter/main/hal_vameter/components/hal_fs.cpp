@@ -1,8 +1,8 @@
 /*
-* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
-*
-* SPDX-License-Identifier: MIT
-*/
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+ *
+ * SPDX-License-Identifier: MIT
+ */
 #include "../hal_vameter.h"
 #include "../hal_config.h"
 #include <mooncake.h>
@@ -58,6 +58,7 @@ void HAL_VAMeter::_log_out_system_config()
 /*                               Config realated                              */
 /* -------------------------------------------------------------------------- */
 static const char* _system_config_path = "/spiflash/system_config.json";
+static const char* _system_config_backup_path = "/spiflash/system_config.json.bk";
 
 void HAL_VAMeter::_config_check_valid()
 {
@@ -77,14 +78,13 @@ void HAL_VAMeter::loadSystemConfig()
 {
     spdlog::info("load config from fs");
 
-    // Open file
+    // Open config
     FILE* config_file = fopen(_system_config_path, "rb");
-
-    // If not exist
     if (config_file == NULL)
     {
         spdlog::warn("{} not exist", _system_config_path);
         saveSystemConfig();
+        _backup_config_file();
         return;
     }
 
@@ -95,13 +95,29 @@ void HAL_VAMeter::loadSystemConfig()
     file_length = ftell(config_file);
     fseek(config_file, 0, SEEK_SET);
     file_content = (char*)malloc(file_length);
+
+    // If shit happened
     if (!file_content)
     {
-        _disp_init();
-        popFatalError("Malloc failed");
+        fclose(config_file);
+
+        spdlog::warn("malloc failed, size: {}", file_length);
+        spdlog::info("try config backup");
+
+        config_file = fopen(_system_config_backup_path, "rb");
+        if (config_file == NULL)
+        {
+            spdlog::info("open backup failed, recreate config file");
+            saveSystemConfig();
+            _backup_config_file();
+            return;
+        }
     }
-    fread(file_content, 1, file_length, config_file);
-    fclose(config_file);
+    else
+    {
+        fread(file_content, 1, file_length, config_file);
+        fclose(config_file);
+    }
 
     // Parse
     JsonDocument doc;
@@ -183,9 +199,45 @@ std::string HAL_VAMeter::_create_config_json()
     return json_content;
 }
 
+void HAL_VAMeter::_backup_config_file()
+{
+    spdlog::info("create config backup");
+
+    // Config
+    spdlog::info("open {}", _system_config_path);
+    FILE* config_file = fopen(_system_config_path, "rb");
+    if (config_file == NULL)
+    {
+        spdlog::warn("open config failed, return");
+        return;
+    }
+
+    // Backup
+    spdlog::info("open {}", _system_config_backup_path);
+    FILE* config_backup_file = fopen(_system_config_backup_path, "wb");
+    if (config_backup_file == NULL)
+    {
+        _disp_init();
+        popFatalError("Open config backup failed");
+    }
+
+    // Copy and save
+    char buffer[1024];
+    size_t bytesRead;
+    while ((bytesRead = fread(buffer, 1, sizeof(buffer), config_file)) > 0)
+    {
+        fwrite(buffer, 1, bytesRead, config_backup_file);
+    }
+
+    fclose(config_file);
+    fclose(config_backup_file);
+}
+
 void HAL_VAMeter::saveSystemConfig()
 {
     spdlog::info("save config to fs");
+
+    _backup_config_file();
 
     std::string json_content = _create_config_json();
 
@@ -205,6 +257,9 @@ void HAL_VAMeter::saveSystemConfig()
     spdlog::info("config saved: {}", _system_config_path);
 }
 
+/* -------------------------------------------------------------------------- */
+/*                                    Misc                                    */
+/* -------------------------------------------------------------------------- */
 std::vector<std::string> HAL_VAMeter::_ls(const std::string& path)
 {
     spdlog::info("ls {}", path);
@@ -260,10 +315,10 @@ void HAL_VAMeter::factoryReset(OnLogPageRenderCallback_t onLogPageRender)
     std::string string_buffer = "start factory reset..";
     onLogPageRender(string_buffer, true, true);
     spdlog::info(string_buffer);
-    
+
     if (!fs_format())
         popFatalError("Factory format\nFailed");
-        
+
     reboot();
 }
 
