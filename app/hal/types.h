@@ -110,7 +110,6 @@ namespace CONFIG
     // Default config
     struct SystemConfig_t
     {
-        int bootCount = 0;
         int brightness = 255;
         int orientation = 0;
         bool beepOn = true;
