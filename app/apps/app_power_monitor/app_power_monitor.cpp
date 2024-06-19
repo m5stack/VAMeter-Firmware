@@ -19,7 +19,29 @@ using namespace VIEWS;
 const char* AppPower_monitor_Packer::getAppName() { return AssetPool::GetText().AppName_PowerMonitor; }
 
 // Theme color
-void* AppPower_monitor_Packer::getCustomData() { return (void*)(&AssetPool::GetStaticAsset()->Color.AppPowerMonitor.primary); }
+// void* AppPower_monitor_Packer::getCustomData() { return (void*)(&AssetPool::GetStaticAsset()->Color.AppPowerMonitor.primary);
+// }
+void* AppPower_monitor_Packer::getCustomData()
+{
+    auto app_history = HAL::NvsGet(NVS_KEY_APP_HISTORY);
+    switch (app_history)
+    {
+    case 0:
+        return (void*)(&AssetPool::GetStaticAsset()->Color.AppPowerMonitor.primary);
+    case 1:
+        return (void*)(&AssetPool::GetStaticAsset()->Color.AppPowerMonitor.pageBusVoltage);
+    case 2:
+        return (void*)(&AssetPool::GetStaticAsset()->Color.AppPowerMonitor.pageShuntCurrent);
+    case 3:
+        return (void*)(&AssetPool::GetStaticAsset()->Color.AppPowerMonitor.pageBusPower);
+    case 4:
+        return (void*)(&AssetPool::GetStaticAsset()->Color.AppPowerMonitor.pageMoreDetailBackground);
+    default:
+        break;
+    }
+    spdlog::warn("no theme color on history {}", app_history);
+    return (void*)(&AssetPool::GetStaticAsset()->Color.AppPowerMonitor.primary);
+}
 
 // Icon
 void* AppPower_monitor_Packer::getAppIcon() { return (void*)AssetPool::GetStaticAsset()->Image.AppPowerMonitor.app_icon; }
