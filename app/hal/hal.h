@@ -1,8 +1,8 @@
 /*
-* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
-*
-* SPDX-License-Identifier: MIT
-*/
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+ *
+ * SPDX-License-Identifier: MIT
+ */
 #pragma once
 #include <functional>
 #include <vector>
@@ -583,4 +583,14 @@ public:
 
     static std::string GetSystemConfigUrl() { return Get()->getSystemConfigUrl(); }
     virtual std::string getSystemConfigUrl() { return "http://192.168.4.1/syscfg"; }
+
+    /* -------------------------------------------------------------------------- */
+    /*                                     NVS                                    */
+    /* -------------------------------------------------------------------------- */
+public:
+    static bool NvsSet(const char* key, const int32_t& value) { return Get()->nvsSet(key, value); }
+    virtual bool nvsSet(const char* key, const int32_t& value) { return false; }
+
+    static int32_t NvsGet(const char* key) { return Get()->nvsGet(key); }
+    virtual int32_t nvsGet(const char* key) { return 0; }
 };

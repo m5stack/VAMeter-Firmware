@@ -1,8 +1,8 @@
 /*
-* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
-*
-* SPDX-License-Identifier: MIT
-*/
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+ *
+ * SPDX-License-Identifier: MIT
+ */
 #pragma once
 #include <cstdint>
 #include <string>
@@ -110,7 +110,6 @@ namespace CONFIG
     // Default config
     struct SystemConfig_t
     {
-        int bootCount = 0;
         int brightness = 255;
         int orientation = 0;
         bool beepOn = true;
@@ -212,4 +211,10 @@ namespace OTA_UPGRADE
 /* -------------------------------------------------------------------------- */
 typedef std::function<void(const std::string& log, bool pushScreen, bool clear)> OnLogPageRenderCallback_t;
 
-#define APP_VERSION "V1.0.0"
+#define APP_VERSION "V1.1.0"
+
+/* -------------------------------------------------------------------------- */
+/*                                  NVS keys                                  */
+/* -------------------------------------------------------------------------- */
+#define NVS_KEY_APP_HISTORY "app_history"
+#define NVS_KEY_BOOT_COUNT "boot_count"

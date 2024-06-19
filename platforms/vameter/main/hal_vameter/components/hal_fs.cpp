@@ -27,16 +27,6 @@ void HAL_VAMeter::_fs_init()
 
     loadSystemConfig();
     _log_out_system_config();
-    _update_boot_count();
-}
-
-void HAL_VAMeter::_update_boot_count()
-{
-    if (_config.bootCount < 10)
-    {
-        _config.bootCount++;
-        saveSystemConfig();
-    }
 }
 
 void HAL_VAMeter::_log_out_system_config()
@@ -51,7 +41,6 @@ void HAL_VAMeter::_log_out_system_config()
     spdlog::info(" - locale code: {}", (int)_config.localeCode);
     spdlog::info(" - currrnt offset: {:0.7f}", _config.currentOffset);
     spdlog::info(" - startup image: {}", _config.startupImage);
-    spdlog::info(" - boot count: {}", _config.bootCount);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -69,9 +58,6 @@ void HAL_VAMeter::_config_check_valid()
 
     if (_config.orientation > 3 || _config.orientation < 0)
         _config.orientation = 0;
-
-    if (_config.bootCount < 0)
-        _config.bootCount = 0;
 }
 
 void HAL_VAMeter::loadSystemConfig()
@@ -144,7 +130,6 @@ void HAL_VAMeter::loadSystemConfig()
     _config.wifiSsid = doc["wifiSsid"].as<std::string>();
     _config.wifiPassword = doc["wifiPassword"].as<std::string>();
     _config.startupImage = doc["startupImage"].as<std::string>();
-    _config.bootCount = doc["bootCount"];
 
     int locale_code = doc["localeCode"];
     if (locale_code <= (int)locale_code_jp && locale_code >= 0)
@@ -185,8 +170,6 @@ std::string HAL_VAMeter::_create_config_json()
     doc["wifiSsid"] = _config.wifiSsid;
     doc["wifiPassword"] = _config.wifiPassword;
     doc["startupImage"] = _config.startupImage;
-
-    doc["bootCount"] = _config.bootCount;
 
     // Serialize
     std::string json_content;

@@ -1,8 +1,8 @@
 /*
-* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
-*
-* SPDX-License-Identifier: MIT
-*/
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+ *
+ * SPDX-License-Identifier: MIT
+ */
 #include "app_startup_anim.h"
 #include "../../hal/hal.h"
 #include "../../assets/assets.h"
@@ -78,7 +78,7 @@ static void _pop_up_launcher_background_mask()
 
 void AppStartupAnim::PopUpGuideMap(bool force)
 {
-    if (!force && HAL::GetSystemConfig().bootCount > 6)
+    if (!force && HAL::NvsGet(NVS_KEY_BOOT_COUNT) > 6)
         return;
 
     Transition2D transition;

@@ -1,8 +1,8 @@
 /*
-* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
-*
-* SPDX-License-Identifier: MIT
-*/
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+ *
+ * SPDX-License-Identifier: MIT
+ */
 #include "app_launcher.h"
 #include "../../hal/hal.h"
 #include "../../assets/assets.h"
@@ -23,6 +23,10 @@ void AppLauncher::onResume()
     spdlog::info("{} onResume", getAppName());
 
     _create_launcher_view();
+
+    // If history app is waveform
+    if (HAL::NvsGet(NVS_KEY_APP_HISTORY) == 5)
+        _data.launcher_view->moveTo(1);
 }
 
 void AppLauncher::onRunning() { _update_launcher_view(); }

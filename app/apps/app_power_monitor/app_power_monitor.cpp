@@ -1,12 +1,13 @@
 /*
-* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
-*
-* SPDX-License-Identifier: MIT
-*/
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+ *
+ * SPDX-License-Identifier: MIT
+ */
 #include "app_power_monitor.h"
 #include "../../hal/hal.h"
 #include "../utils/system/system.h"
 #include "../../assets/assets.h"
+#include "spdlog/spdlog.h"
 #include "view/view.h"
 #include <mooncake.h>
 #include <string>
@@ -18,10 +19,35 @@ using namespace VIEWS;
 const char* AppPower_monitor_Packer::getAppName() { return AssetPool::GetText().AppName_PowerMonitor; }
 
 // Theme color
-void* AppPower_monitor_Packer::getCustomData() { return (void*)(&AssetPool::GetStaticAsset()->Color.AppPowerMonitor.primary); }
+// void* AppPower_monitor_Packer::getCustomData() { return (void*)(&AssetPool::GetStaticAsset()->Color.AppPowerMonitor.primary);
+// }
+void* AppPower_monitor_Packer::getCustomData()
+{
+    auto app_history = HAL::NvsGet(NVS_KEY_APP_HISTORY);
+    switch (app_history)
+    {
+    case 0:
+        return (void*)(&AssetPool::GetStaticAsset()->Color.AppPowerMonitor.primary);
+    case 1:
+        return (void*)(&AssetPool::GetStaticAsset()->Color.AppPowerMonitor.pageBusVoltage);
+    case 2:
+        return (void*)(&AssetPool::GetStaticAsset()->Color.AppPowerMonitor.pageShuntCurrent);
+    case 3:
+        return (void*)(&AssetPool::GetStaticAsset()->Color.AppPowerMonitor.pageBusPower);
+    case 4:
+        return (void*)(&AssetPool::GetStaticAsset()->Color.AppPowerMonitor.pageMoreDetailBackground);
+    default:
+        break;
+    }
+    spdlog::warn("no theme color on history {}", app_history);
+    return (void*)(&AssetPool::GetStaticAsset()->Color.AppPowerMonitor.primary);
+}
 
 // Icon
 void* AppPower_monitor_Packer::getAppIcon() { return (void*)AssetPool::GetStaticAsset()->Image.AppPowerMonitor.app_icon; }
+
+// Page 0~4
+constexpr static int _total_page_num = 4;
 
 // Like setup()...
 void AppPower_monitor::onResume()
@@ -29,6 +55,15 @@ void AppPower_monitor::onResume()
     spdlog::info("{} onResume", getAppName());
     _data.view = new PmDataPage;
     _data.is_page_switched = true;
+
+    // Load history page
+    _data.current_page_num = HAL::NvsGet(NVS_KEY_APP_HISTORY);
+    if (_data.current_page_num > _total_page_num || _data.current_page_num < 0)
+    {
+        spdlog::error("wrong history page {}", _data.current_page_num);
+        _data.current_page_num = 0;
+    }
+
     Encoder::Reset();
 }
 
@@ -44,8 +79,6 @@ void AppPower_monitor::onDestroy()
     spdlog::info("{} onDestroy", getAppName());
     delete _data.view;
 }
-
-constexpr static int _total_page_num = 4;
 
 void AppPower_monitor::_check_page_switch()
 {
@@ -80,20 +113,24 @@ void AppPower_monitor::_check_page_switch()
         {
         case 0:
             _setup_page_simple_detail();
+            HAL::NvsSet(NVS_KEY_APP_HISTORY, 0);
             break;
         case 1:
             _data.view->quitSimpleDetailPage();
             _setup_page_bus_volt();
             _data.view->reset();
+            HAL::NvsSet(NVS_KEY_APP_HISTORY, 1);
             break;
         case 2:
             _setup_page_shunt_current();
             _data.view->reset();
+            HAL::NvsSet(NVS_KEY_APP_HISTORY, 2);
             break;
         case 3:
             _data.view->quitMoreDetailPage();
             _setup_page_bus_power();
             _data.view->reset();
+            HAL::NvsSet(NVS_KEY_APP_HISTORY, 3);
             break;
         // case 4:
         //     _data.view->quitMoreDetailPage();
@@ -102,6 +139,7 @@ void AppPower_monitor::_check_page_switch()
         //     break;
         case 4:
             _setup_page_more_detail();
+            HAL::NvsSet(NVS_KEY_APP_HISTORY, 4);
             break;
         default:
             break;

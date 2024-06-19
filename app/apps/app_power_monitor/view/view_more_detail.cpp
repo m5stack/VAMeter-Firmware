@@ -1,8 +1,8 @@
 /*
-* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
-*
-* SPDX-License-Identifier: MIT
-*/
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+ *
+ * SPDX-License-Identifier: MIT
+ */
 #include "view.h"
 #include "../../../hal/hal.h"
 #include "../../../assets/assets.h"
@@ -26,6 +26,12 @@ void PmDataPage::goMoreDetailPage()
         return;
 
     _data.is_all_detail_page = true;
+
+    if (_data.is_just_create)
+    {
+        _data.is_just_create = false;
+        _data.bg_color.jumpTo(AssetPool::GetColor().AppPowerMonitor.pageMoreDetailBackground);
+    }
     _data.bg_color.moveTo(AssetPool::GetColor().AppPowerMonitor.pageMoreDetailBackground);
 
     // HAL::GetCanvas()->loadFont(AssetPool::GetStaticAsset()->Font.montserrat_semibold_16);
