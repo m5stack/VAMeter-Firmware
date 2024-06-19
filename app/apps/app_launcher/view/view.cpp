@@ -1,8 +1,8 @@
 /*
-* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
-*
-* SPDX-License-Identifier: MIT
-*/
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+ *
+ * SPDX-License-Identifier: MIT
+ */
 #include "view.h"
 #include "../../../hal/hal.h"
 #include "../../../assets/assets.h"
@@ -99,6 +99,12 @@ void LauncherView::init()
         // Jump to opened anim
         getSelectorPostion().jumpTo(getSelectedKeyframe().x - _icon_gap_x * 2, 0);
         getSelectorShape().jumpTo(HAL::GetCanvas()->width(), HAL::GetCanvas()->height());
+    }
+    else
+    {
+        // If history app is waveform
+        if (HAL::NvsGet(NVS_KEY_APP_HISTORY) == 5)
+            moveTo(1);
     }
 
     // Offset for efont font
