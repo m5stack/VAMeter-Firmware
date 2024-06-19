@@ -1,8 +1,8 @@
 /*
-* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
-*
-* SPDX-License-Identifier: MIT
-*/
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+ *
+ * SPDX-License-Identifier: MIT
+ */
 #include "app_waveform.h"
 #include "../../hal/hal.h"
 #include "../utils/system/system.h"
@@ -31,6 +31,9 @@ void AppWaveform::onResume()
     spdlog::info("{} onResume", getAppName());
     _data.view = new VIEWS::WaveFormRecorder(AssetPool::GetColor().AppWaveform.primary);
     _data.view->init();
+
+    // Footprint
+    HAL::NvsSet(NVS_KEY_APP_HISTORY, 5);
 }
 
 // Like loop()...
