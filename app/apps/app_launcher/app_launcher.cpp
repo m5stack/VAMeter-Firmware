@@ -23,10 +23,6 @@ void AppLauncher::onResume()
     spdlog::info("{} onResume", getAppName());
 
     _create_launcher_view();
-
-    // If history app is waveform
-    if (HAL::NvsGet(NVS_KEY_APP_HISTORY) == 5)
-        _data.launcher_view->moveTo(1);
 }
 
 void AppLauncher::onRunning() { _update_launcher_view(); }
