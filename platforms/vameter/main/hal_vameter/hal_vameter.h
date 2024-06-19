@@ -1,8 +1,8 @@
 /*
-* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
-*
-* SPDX-License-Identifier: MIT
-*/
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+ *
+ * SPDX-License-Identifier: MIT
+ */
 #pragma once
 #include <hal/hal.h>
 
@@ -22,7 +22,6 @@ private:
     void _power_monitor_start_daemon();
 
     void _fs_init();
-    void _update_boot_count();
     std::vector<std::string> _ls(const std::string& path);
     void _config_check_valid();
     std::string _create_config_json();
@@ -30,6 +29,8 @@ private:
     void _log_out_system_config();
     void _fs_get_new_rec_file_path(char* recFilePath, size_t bufferSize);
     std::string _fs_get_rec_file_path(const std::string& recordName);
+
+    void _nvs_init();
 
     std::string _get_mac();
     std::string _get_ip();
@@ -52,6 +53,7 @@ public:
         _disp_init();
         _encoder_init();
         _seaker_init();
+        _nvs_init();
         _i2c_init();
         _power_monitor_init();
         _vabase_init();
@@ -118,4 +120,8 @@ public:
     void baseGroveStopTest() override;
     bool baseGroveGetIoALevel() override;
     bool baseGroveGetIoBLevel() override;
+
+    bool nvsSet(const char* key, const int32_t& value) override;
+    int32_t nvsGet(const char* key) override;
+    void _update_boot_count();
 };
