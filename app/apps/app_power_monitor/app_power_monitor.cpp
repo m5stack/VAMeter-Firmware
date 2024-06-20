@@ -27,7 +27,7 @@ void* AppPower_monitor_Packer::getCustomData()
     switch (app_history)
     {
     case 0:
-        return (void*)(&AssetPool::GetStaticAsset()->Color.AppPowerMonitor.primary);
+        return (void*)(&AssetPool::GetStaticAsset()->Color.AppPowerMonitor.pageSimpleDetailBackground);
     case 1:
         return (void*)(&AssetPool::GetStaticAsset()->Color.AppPowerMonitor.pageBusVoltage);
     case 2:
@@ -39,8 +39,8 @@ void* AppPower_monitor_Packer::getCustomData()
     default:
         break;
     }
-    spdlog::warn("no theme color on history {}", app_history);
-    return (void*)(&AssetPool::GetStaticAsset()->Color.AppPowerMonitor.primary);
+    // spdlog::warn("no theme color on history {}", app_history);
+    return (void*)(&AssetPool::GetStaticAsset()->Color.AppPowerMonitor.pageSimpleDetailBackground);
 }
 
 // Icon
@@ -240,7 +240,7 @@ void AppPower_monitor::_setup_page_shunt_volt()
 void AppPower_monitor::_setup_page_simple_detail()
 {
     spdlog::info("page simple detail");
-    _data.view->setConfig().themeColor = AssetPool::GetStaticAsset()->Color.AppPowerMonitor.primary;
+    _data.view->setConfig().themeColor = AssetPool::GetStaticAsset()->Color.AppPowerMonitor.pageSimpleDetailBackground;
     _data.view->reset();
     _data.view->goSimpleDetailPage();
 }
