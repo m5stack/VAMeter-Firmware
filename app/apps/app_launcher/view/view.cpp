@@ -43,6 +43,7 @@ static constexpr int _auto_open_press_anim_time = 1100;
 
 // For restoration to last opened
 static int _last_selected_option_index = -1;
+void LauncherView::SetLastSelectedOptionIndex(const int& index) { _last_selected_option_index = index; }
 
 /* -------------------------------------------------------------------------- */
 /*                                    Setup                                   */
@@ -99,12 +100,6 @@ void LauncherView::init()
         // Jump to opened anim
         getSelectorPostion().jumpTo(getSelectedKeyframe().x - _icon_gap_x * 2, 0);
         getSelectorShape().jumpTo(HAL::GetCanvas()->width(), HAL::GetCanvas()->height());
-    }
-    else
-    {
-        // If history app is waveform
-        if (HAL::NvsGet(NVS_KEY_APP_HISTORY) == 5)
-            moveTo(1);
     }
 
     // Offset for efont font

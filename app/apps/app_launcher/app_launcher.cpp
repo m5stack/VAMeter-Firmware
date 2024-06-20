@@ -6,6 +6,7 @@
 #include "app_launcher.h"
 #include "../../hal/hal.h"
 #include "../../assets/assets.h"
+#include "core/transition3d/transition3d.h"
 #include "spdlog/spdlog.h"
 
 using namespace MOONCAKE::APPS;
@@ -18,9 +19,34 @@ void AppLauncher::onCreate()
     setAllowBgRunning(true);
 }
 
+static bool _is_just_boot_up = true;
+
 void AppLauncher::onResume()
 {
     spdlog::info("{} onResume", getAppName());
+
+    // If just boot up, open history app directly
+    if (_is_just_boot_up)
+    {
+        _is_just_boot_up = false;
+
+        // Create app
+        if (HAL::NvsGet(NVS_KEY_APP_HISTORY) == 5)
+        {
+            mcAppGetFramework()->createAndStartApp(mcAppGetFramework()->getInstalledAppList()[2]);
+            VIEW::LauncherView::SetLastSelectedOptionIndex(1);
+        }
+        else
+        {
+            mcAppGetFramework()->createAndStartApp(mcAppGetFramework()->getInstalledAppList()[1]);
+            VIEW::LauncherView::SetLastSelectedOptionIndex(0);
+        }
+
+        // Stack launcher into background
+        closeApp();
+
+        return;
+    }
 
     _create_launcher_view();
 }
@@ -82,4 +108,11 @@ void AppLauncher::_create_launcher_view()
 
 void AppLauncher::_update_launcher_view() { _data.launcher_view->update(HAL::Millis()); }
 
-void AppLauncher::_destroy_launcher_view() { delete _data.launcher_view; }
+void AppLauncher::_destroy_launcher_view()
+{
+    if (_data.launcher_view != nullptr)
+    {
+        delete _data.launcher_view;
+        _data.launcher_view = nullptr;
+    }
+}

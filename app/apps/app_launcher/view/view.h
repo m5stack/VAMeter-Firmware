@@ -1,8 +1,8 @@
 /*
-* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
-*
-* SPDX-License-Identifier: MIT
-*/
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+ *
+ * SPDX-License-Identifier: MIT
+ */
 #pragma once
 #include "misc/water_wave_generator/water_wave_generator.h"
 #include <functional>
@@ -73,5 +73,8 @@ namespace VIEW
         {
             _data.app_open_callback = appOpenCallback;
         }
+
+    public:
+        static void SetLastSelectedOptionIndex(const int& index);
     };
 } // namespace VIEW
