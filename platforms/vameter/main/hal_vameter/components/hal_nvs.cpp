@@ -92,3 +92,12 @@ void HAL_VAMeter::_update_boot_count()
         nvsSet(NVS_KEY_BOOT_COUNT, boot_count);
     }
 }
+
+bool HAL_VAMeter::_nvs_reset()
+{
+    spdlog::info("reset nvs");
+
+    if (nvs_flash_erase() != ESP_OK)
+        return false;
+    return true;
+}

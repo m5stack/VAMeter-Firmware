@@ -302,6 +302,9 @@ void HAL_VAMeter::factoryReset(OnLogPageRenderCallback_t onLogPageRender)
     if (!fs_format())
         popFatalError("Factory format\nFailed");
 
+    if (!_nvs_reset())
+        popFatalError("Nvs format\nFailed");
+
     reboot();
 }
 

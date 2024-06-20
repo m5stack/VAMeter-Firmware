@@ -31,6 +31,8 @@ private:
     std::string _fs_get_rec_file_path(const std::string& recordName);
 
     void _nvs_init();
+    void _update_boot_count();
+    bool _nvs_reset();
 
     std::string _get_mac();
     std::string _get_ip();
@@ -123,5 +125,4 @@ public:
 
     bool nvsSet(const char* key, const int32_t& value) override;
     int32_t nvsGet(const char* key) override;
-    void _update_boot_count();
 };
