@@ -1,8 +1,8 @@
 /*
-* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
-*
-* SPDX-License-Identifier: MIT
-*/
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+ *
+ * SPDX-License-Identifier: MIT
+ */
 #include "view.h"
 #include "../../../hal/hal.h"
 #include "../../../assets/assets.h"
@@ -69,9 +69,9 @@ Waveform::Waveform(uint32_t themeColor)
 
     // Chart
     _chart_props.chart_v.setOrigin(0, 35);
-    _chart_props.chart_a.setOrigin(0, 35);
-    _chart_props.chart_v.setSize(240, 170);
-    _chart_props.chart_a.setSize(240, 170);
+    _chart_props.chart_a.setOrigin(0, 45);
+    _chart_props.chart_v.setSize(240, 160);
+    _chart_props.chart_a.setSize(240, 160);
 
     _chart_props.chart_v.getZoomTransition().setTransitionPath(EasingPath::easeOutBack);
     _chart_props.chart_v.getZoomTransition().setDuration(400);
@@ -420,50 +420,48 @@ void Waveform::_render_wave()
     _chart_props.stop_render = false;
     _input_props.max_v = 0;
     _input_props.min_v = 114514;
-    _input_props.pm_data_buffer_v.peekAll(
-        [&](const float& value)
+    _input_props.pm_data_buffer_v.peekAll([&](const float& value) {
+        // Pass if out of range
+        if (_chart_props.stop_render)
+            return;
+        if (_chart_props.last_p.x > 240)
         {
-            // Pass if out of range
-            if (_chart_props.stop_render)
-                return;
-            if (_chart_props.last_p.x > 240)
+            _chart_props.stop_render = true;
+            return;
+        }
+
+        // Get chart point
+        _chart_props.new_p = _chart_props.chart_v.getChartPoint(static_cast<float>(_chart_props.p_x), value);
+        _chart_props.new_p.x -= _chart_props.temp_buffer;
+
+        // Render
+        if (_chart_props.p_x != 0 && _chart_props.last_p.x <= 240)
+        {
+            // Fake width
+            for (int i = 0; i < 3; i++)
             {
-                _chart_props.stop_render = true;
-                return;
+                HAL::GetCanvas()->drawLine(_chart_props.last_p.x + i,
+                                           _chart_props.last_p.y,
+                                           _chart_props.new_p.x + i,
+                                           _chart_props.new_p.y,
+                                           AssetPool::GetColor().AppWaveform.colorLineV);
+                HAL::GetCanvas()->drawLine(_chart_props.last_p.x,
+                                           _chart_props.last_p.y + i,
+                                           _chart_props.new_p.x,
+                                           _chart_props.new_p.y + i,
+                                           AssetPool::GetColor().AppWaveform.colorLineV);
             }
+        }
+        _chart_props.last_p = _chart_props.new_p;
+        _chart_props.p_x++;
+        // spdlog::info("{} {} {}", chart_x, current_p.x, current_p.y);
 
-            // Get chart point
-            _chart_props.new_p = _chart_props.chart_v.getChartPoint(static_cast<float>(_chart_props.p_x), value);
-            _chart_props.new_p.x -= _chart_props.temp_buffer;
-
-            // Render
-            if (_chart_props.p_x != 0 && _chart_props.last_p.x <= 240)
-            {
-                // Fake width
-                for (int i = 0; i < 3; i++)
-                {
-                    HAL::GetCanvas()->drawLine(_chart_props.last_p.x + i,
-                                               _chart_props.last_p.y,
-                                               _chart_props.new_p.x + i,
-                                               _chart_props.new_p.y,
-                                               AssetPool::GetColor().AppWaveform.colorLineV);
-                    HAL::GetCanvas()->drawLine(_chart_props.last_p.x,
-                                               _chart_props.last_p.y + i,
-                                               _chart_props.new_p.x,
-                                               _chart_props.new_p.y + i,
-                                               AssetPool::GetColor().AppWaveform.colorLineV);
-                }
-            }
-            _chart_props.last_p = _chart_props.new_p;
-            _chart_props.p_x++;
-            // spdlog::info("{} {} {}", chart_x, current_p.x, current_p.y);
-
-            // Update max and min from the buffer
-            if (value > _input_props.max_v)
-                _input_props.max_v = value;
-            else if (value < _input_props.min_v)
-                _input_props.min_v = value;
-        });
+        // Update max and min from the buffer
+        if (value > _input_props.max_v)
+            _input_props.max_v = value;
+        else if (value < _input_props.min_v)
+            _input_props.min_v = value;
+    });
 
     // Shunt current
     _chart_props.p_x = 0;
@@ -471,50 +469,48 @@ void Waveform::_render_wave()
     _chart_props.stop_render = false;
     _input_props.max_a = 0;
     _input_props.min_a = 114514;
-    _input_props.pm_data_buffer_a.peekAll(
-        [&](const float& value)
+    _input_props.pm_data_buffer_a.peekAll([&](const float& value) {
+        // Pass if out of range
+        if (_chart_props.stop_render)
+            return;
+        if (_chart_props.last_p.x > 240)
         {
-            // Pass if out of range
-            if (_chart_props.stop_render)
-                return;
-            if (_chart_props.last_p.x > 240)
+            _chart_props.stop_render = true;
+            return;
+        }
+
+        // Get chart point
+        _chart_props.new_p = _chart_props.chart_a.getChartPoint(static_cast<float>(_chart_props.p_x), value);
+        _chart_props.new_p.x -= _chart_props.temp_buffer;
+
+        // Render
+        if (_chart_props.p_x != 0 && _chart_props.last_p.x <= 240)
+        {
+            // Fake width
+            for (int i = 0; i < 3; i++)
             {
-                _chart_props.stop_render = true;
-                return;
+                HAL::GetCanvas()->drawLine(_chart_props.last_p.x + i,
+                                           _chart_props.last_p.y,
+                                           _chart_props.new_p.x + i,
+                                           _chart_props.new_p.y,
+                                           AssetPool::GetColor().AppWaveform.colorLineA);
+                HAL::GetCanvas()->drawLine(_chart_props.last_p.x,
+                                           _chart_props.last_p.y + i,
+                                           _chart_props.new_p.x,
+                                           _chart_props.new_p.y + i,
+                                           AssetPool::GetColor().AppWaveform.colorLineA);
             }
+        }
+        _chart_props.last_p = _chart_props.new_p;
+        _chart_props.p_x++;
+        // spdlog::info("{} {} {}", chart_x, current_p.x, current_p.y);
 
-            // Get chart point
-            _chart_props.new_p = _chart_props.chart_a.getChartPoint(static_cast<float>(_chart_props.p_x), value);
-            _chart_props.new_p.x -= _chart_props.temp_buffer;
-
-            // Render
-            if (_chart_props.p_x != 0 && _chart_props.last_p.x <= 240)
-            {
-                // Fake width
-                for (int i = 0; i < 3; i++)
-                {
-                    HAL::GetCanvas()->drawLine(_chart_props.last_p.x + i,
-                                               _chart_props.last_p.y,
-                                               _chart_props.new_p.x + i,
-                                               _chart_props.new_p.y,
-                                               AssetPool::GetColor().AppWaveform.colorLineA);
-                    HAL::GetCanvas()->drawLine(_chart_props.last_p.x,
-                                               _chart_props.last_p.y + i,
-                                               _chart_props.new_p.x,
-                                               _chart_props.new_p.y + i,
-                                               AssetPool::GetColor().AppWaveform.colorLineA);
-                }
-            }
-            _chart_props.last_p = _chart_props.new_p;
-            _chart_props.p_x++;
-            // spdlog::info("{} {} {}", chart_x, current_p.x, current_p.y);
-
-            // Update max and min from the buffer
-            if (value > _input_props.max_a)
-                _input_props.max_a = value;
-            else if (value < _input_props.min_a)
-                _input_props.min_a = value;
-        });
+        // Update max and min from the buffer
+        if (value > _input_props.max_a)
+            _input_props.max_a = value;
+        else if (value < _input_props.min_a)
+            _input_props.min_a = value;
+    });
 }
 
 void Waveform::_render_panels()
