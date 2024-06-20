@@ -66,11 +66,20 @@ static void _pop_up_launcher_background_mask()
     // A circle as mask
     transition.setDuration(300);
     transition.moveTo(120, 120);
+
+    // Get mask color
+    uint32_t mask_color = 0;
+    if (HAL::NvsGet(NVS_KEY_APP_HISTORY) == 5)
+        mask_color = AssetPool::GetColor().AppWaveform.primary;
+    else
+        mask_color = AssetPool::GetColor().AppPowerMonitor.primary;
+
     while (!transition.isFinish())
     {
         transition.update(HAL::Millis());
-        HAL::GetCanvas()->fillSmoothCircle(
-            transition.getValue().x, transition.getValue().y, 200, AssetPool::GetColor().AppLauncher.background);
+        // HAL::GetCanvas()->fillSmoothCircle(
+        //     transition.getValue().x, transition.getValue().y, 200, AssetPool::GetColor().AppLauncher.background);
+        HAL::GetCanvas()->fillSmoothCircle(transition.getValue().x, transition.getValue().y, 200, mask_color);
         HAL::CanvasUpdate();
         HAL::FeedTheDog();
     }
