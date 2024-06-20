@@ -69,10 +69,31 @@ static void _pop_up_launcher_background_mask()
 
     // Get mask color
     uint32_t mask_color = 0;
-    if (HAL::NvsGet(NVS_KEY_APP_HISTORY) == 5)
+    auto app_history_page = HAL::NvsGet(NVS_KEY_APP_HISTORY);
+    switch (app_history_page)
+    {
+    case 0:
+        mask_color = AssetPool::GetColor().AppPowerMonitor.pageSimpleDetailBackground;
+        break;
+    case 1:
+        mask_color = AssetPool::GetColor().AppPowerMonitor.pageBusVoltage;
+        break;
+    case 2:
+        mask_color = AssetPool::GetColor().AppPowerMonitor.pageShuntCurrent;
+        break;
+    case 3:
+        mask_color = AssetPool::GetColor().AppPowerMonitor.pageBusPower;
+        break;
+    case 4:
+        mask_color = AssetPool::GetColor().AppPowerMonitor.pageMoreDetailBackground;
+        break;
+    case 5:
         mask_color = AssetPool::GetColor().AppWaveform.primary;
-    else
-        mask_color = AssetPool::GetColor().AppPowerMonitor.primary;
+        break;
+    default:
+        mask_color = AssetPool::GetColor().AppLauncher.background;
+        break;
+    }
 
     while (!transition.isFinish())
     {
