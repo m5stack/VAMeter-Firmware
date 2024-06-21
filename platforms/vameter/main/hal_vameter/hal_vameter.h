@@ -43,6 +43,7 @@ private:
     void _web_server_page_loading();
     void _web_server_api_loading();
     void _web_server_ws_api_loading();
+    void _print_stack_high_water_mark();
 
 public:
     inline std::string type() override { return "VAMeter"; }

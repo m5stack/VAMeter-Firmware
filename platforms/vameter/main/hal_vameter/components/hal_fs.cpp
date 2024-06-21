@@ -186,6 +186,8 @@ void HAL_VAMeter::_backup_config_file()
 {
     spdlog::info("create config backup");
 
+    // _print_stack_high_water_mark();
+
     // Config
     spdlog::info("open {}", _system_config_path);
     FILE* config_file = fopen(_system_config_path, "rb");
@@ -205,12 +207,13 @@ void HAL_VAMeter::_backup_config_file()
     }
 
     // Copy and save
-    char buffer[1024];
+    char* buffer = new char[1024];
     size_t bytesRead;
-    while ((bytesRead = fread(buffer, 1, sizeof(buffer), config_file)) > 0)
+    while ((bytesRead = fread(buffer, 1, 1024, config_file)) > 0)
     {
         fwrite(buffer, 1, bytesRead, config_backup_file);
     }
+    delete[] buffer;
 
     fclose(config_file);
     fclose(config_backup_file);
