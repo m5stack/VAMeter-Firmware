@@ -1,8 +1,8 @@
 /*
-* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
-*
-* SPDX-License-Identifier: MIT
-*/
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+ *
+ * SPDX-License-Identifier: MIT
+ */
 #include "../hal_vameter.h"
 #include "../hal_config.h"
 #include "../../../app/assets/assets.h"
@@ -113,6 +113,13 @@ void HAL_VAMeter::_web_server_page_loading()
     });
 }
 
+void HAL_VAMeter::_print_stack_high_water_mark()
+{
+    TaskHandle_t task_handle = xTaskGetCurrentTaskHandle();
+    UBaseType_t stack_high_water_mark = uxTaskGetStackHighWaterMark(task_handle);
+    spdlog::info("Stack high water mark: {} bytes", stack_high_water_mark * sizeof(StackType_t));
+}
+
 /* -------------------------------------------------------------------------- */
 /*                                 Normal apis                                */
 /* -------------------------------------------------------------------------- */
@@ -134,28 +141,34 @@ void HAL_VAMeter::_web_server_api_loading()
         // spdlog::info("get json:\n{}", request->body().c_str());
         spdlog::info("handle set config");
 
+        // _print_stack_high_water_mark();
+
         // Parse
-        JsonDocument doc;
-        DeserializationError error = deserializeJson(doc, request->body().c_str());
-        if (error != DeserializationError::Ok)
         {
-            spdlog::error("json parse failed");
-            spdlog::error("get:\n{}", request->body().c_str());
-            return request->reply(500, "application/json", "{\"msg\":\"json parse failed\"}");
+            JsonDocument doc;
+            DeserializationError error = deserializeJson(doc, request->body().c_str());
+            if (error != DeserializationError::Ok)
+            {
+                spdlog::error("json parse failed");
+                spdlog::error("get:\n{}", request->body().c_str());
+                return request->reply(500, "application/json", "{\"msg\":\"json parse failed\"}");
+            }
+
+            // Copy
+            std::string string_buffer;
+
+            string_buffer = doc["wifiSsid"].as<std::string>();
+            if (string_buffer != "null")
+                _config.wifiSsid = string_buffer;
+
+            string_buffer = doc["wifiPassword"].as<std::string>();
+            if (string_buffer != "null")
+                _config.wifiPassword = string_buffer;
+
+            // ...
         }
 
-        // Copy
-        std::string string_buffer;
-
-        string_buffer = doc["wifiSsid"].as<std::string>();
-        if (string_buffer != "null")
-            _config.wifiSsid = string_buffer;
-
-        string_buffer = doc["wifiPassword"].as<std::string>();
-        if (string_buffer != "null")
-            _config.wifiPassword = string_buffer;
-
-        // ...
+        // _print_stack_high_water_mark();
 
         saveSystemConfig();
 
@@ -279,7 +292,7 @@ HELL:
 
         _web_server_page_loading();
         _web_server_api_loading();
-        _web_server_ws_api_loading();
+        // _web_server_ws_api_loading();
     }
 
     spdlog::info("web server started");
