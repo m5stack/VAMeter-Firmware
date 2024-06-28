@@ -1,8 +1,8 @@
 /*
-* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
-*
-* SPDX-License-Identifier: MIT
-*/
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+ *
+ * SPDX-License-Identifier: MIT
+ */
 #pragma once
 #include "../../../hal/hal.h"
 #include "config_panel/config_panel.h"
@@ -39,8 +39,10 @@ namespace VIEWS
             bool stop_render = false;
 
             int current_x_range = 0;
-            float current_v_y_range = -1;
-            float current_a_y_range = -1;
+            float current_v_y_range_top = -1;
+            float current_v_y_range_bottom = 0;
+            float current_a_y_range_top = -1;
+            float current_a_y_range_bottom = 0;
 
             std::string string_buffer;
 
@@ -71,6 +73,11 @@ namespace VIEWS
             float max_v = 0;
             float min_a = 114514;
             float max_a = 0;
+
+            float last_min_v = 114514;
+            float last_max_v = 114514;
+            float last_min_a = 114514;
+            float last_max_a = 114514;
 
             bool is_paused = false;
             bool update_chart_x = true;

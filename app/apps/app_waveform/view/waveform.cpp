@@ -175,27 +175,65 @@ void Waveform::_update_chart_x_zoom()
 
 void Waveform::_update_chart_y_zoom()
 {
-    // Update y range to the max value
-    // Unless it's too small
-    if (_input_props.max_v != _chart_props.current_v_y_range)
+    // If first time
+    if (_input_props.last_min_v == 114514)
     {
-        if (_input_props.max_v < _chart_v_min_y_range)
-            _chart_props.current_v_y_range = _chart_v_min_y_range;
-        else
-            _chart_props.current_v_y_range = _input_props.max_v;
-
-        _chart_props.chart_v.moveYIntoRange(0, _chart_props.current_v_y_range);
+        _input_props.last_min_v = _input_props.min_v;
+        _input_props.last_max_v = _input_props.max_v;
+        _input_props.last_min_a = _input_props.min_a;
+        _input_props.last_max_a = _input_props.max_a;
+        return;
     }
 
-    if (_input_props.max_a != _chart_props.current_a_y_range)
+    // V chart y range
+    if (_input_props.min_v != _input_props.last_min_v || _input_props.max_v != _input_props.last_max_v)
     {
-        if (_input_props.max_a < _chart_a_min_y_range)
-            _chart_props.current_a_y_range = _chart_a_min_y_range;
-        else
-            _chart_props.current_a_y_range = _input_props.max_a;
+        // Top
+        _chart_props.current_v_y_range_top = _input_props.max_v;
 
-        _chart_props.chart_a.moveYIntoRange(0, _chart_props.current_a_y_range);
+        // Bottom
+        _chart_props.current_v_y_range_bottom = _input_props.min_v;
+
+        // Min range limit
+        if (_chart_props.current_v_y_range_top - _chart_props.current_v_y_range_bottom < _chart_v_min_y_range)
+        {
+            auto mid_point = (_input_props.max_v - _input_props.min_v) / 2 + _input_props.min_v;
+            _chart_props.current_v_y_range_top = mid_point + _chart_v_min_y_range / 2;
+            _chart_props.current_v_y_range_bottom = mid_point - _chart_v_min_y_range / 2;
+        }
+
+        // Update range
+        // spdlog::info("v {:.2f} {:.2f}", _chart_props.current_v_y_range_bottom, _chart_props.current_v_y_range_top);
+        _chart_props.chart_v.moveYIntoRange(_chart_props.current_v_y_range_bottom, _chart_props.current_v_y_range_top);
     }
+
+    // A chart y range
+    if (_input_props.min_a != _input_props.last_min_a || _input_props.max_a != _input_props.last_max_a)
+    {
+        // Top
+        _chart_props.current_a_y_range_top = _input_props.max_a;
+
+        // Bottom
+        _chart_props.current_a_y_range_bottom = _input_props.min_a;
+
+        // Min range limit
+        if (_chart_props.current_a_y_range_top - _chart_props.current_a_y_range_bottom < _chart_a_min_y_range)
+        {
+            auto mid_point = (_input_props.max_a - _input_props.min_a) / 2 + _input_props.min_a;
+            _chart_props.current_a_y_range_top = mid_point + _chart_a_min_y_range / 2;
+            _chart_props.current_a_y_range_bottom = mid_point - _chart_a_min_y_range / 2;
+        }
+
+        // Update range
+        // spdlog::info("v {:.2f} {:.2f}", _chart_props.current_a_y_range_bottom, _chart_props.current_a_y_range_top);
+        _chart_props.chart_a.moveYIntoRange(_chart_props.current_a_y_range_bottom, _chart_props.current_a_y_range_top);
+    }
+
+    // Update
+    _input_props.last_min_v = _input_props.min_v;
+    _input_props.last_max_v = _input_props.max_v;
+    _input_props.last_min_a = _input_props.min_a;
+    _input_props.last_max_a = _input_props.max_a;
 }
 
 // For recorder view usage, easer to handle here
@@ -210,14 +248,14 @@ void Waveform::_update_chart_y_zoom_with_third_value(const float& thirdV, const 
     if (thirdV > compare_value)
         compare_value = thirdV;
 
-    if (compare_value != _chart_props.current_v_y_range)
+    if (compare_value != _chart_props.current_v_y_range_top)
     {
         if (compare_value < _chart_v_min_y_range)
-            _chart_props.current_v_y_range = _chart_v_min_y_range;
+            _chart_props.current_v_y_range_top = _chart_v_min_y_range;
         else
-            _chart_props.current_v_y_range = compare_value;
+            _chart_props.current_v_y_range_top = compare_value;
 
-        _chart_props.chart_v.moveYIntoRange(0, _chart_props.current_v_y_range);
+        _chart_props.chart_v.moveYIntoRange(0, _chart_props.current_v_y_range_top);
     }
 
     /* ------------------------------------ A ----------------------------------- */
@@ -225,14 +263,14 @@ void Waveform::_update_chart_y_zoom_with_third_value(const float& thirdV, const 
     if (thirdA > compare_value)
         compare_value = thirdA;
 
-    if (compare_value != _chart_props.current_a_y_range)
+    if (compare_value != _chart_props.current_a_y_range_top)
     {
         if (compare_value < _chart_a_min_y_range)
-            _chart_props.current_a_y_range = _chart_a_min_y_range;
+            _chart_props.current_a_y_range_top = _chart_a_min_y_range;
         else
-            _chart_props.current_a_y_range = compare_value;
+            _chart_props.current_a_y_range_top = compare_value;
 
-        _chart_props.chart_a.moveYIntoRange(0, _chart_props.current_a_y_range);
+        _chart_props.chart_a.moveYIntoRange(0, _chart_props.current_a_y_range_top);
     }
 }
 
@@ -331,9 +369,9 @@ void Waveform::_render_y_scales()
     // spdlog::info("{}", scale_top);
 
     if (_input_props.max_a < 5)
-        scale_top = std::ceil(_chart_props.current_a_y_range / 0.5) * 0.5;
+        scale_top = std::ceil(_chart_props.current_a_y_range_top / 0.5) * 0.5;
     else
-        scale_top = std::ceil(_chart_props.current_a_y_range / 5) * 5;
+        scale_top = std::ceil(_chart_props.current_a_y_range_top / 5) * 5;
 
     // Get scale
     std::array<float, 6> a_scale_list;
