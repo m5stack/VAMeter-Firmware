@@ -175,15 +175,15 @@ void Waveform::_update_chart_x_zoom()
 
 void Waveform::_update_chart_y_zoom()
 {
-    // If first time
-    if (_input_props.last_min_v == 114514)
-    {
-        _input_props.last_min_v = _input_props.min_v;
-        _input_props.last_max_v = _input_props.max_v;
-        _input_props.last_min_a = _input_props.min_a;
-        _input_props.last_max_a = _input_props.max_a;
-        return;
-    }
+    // // If first time
+    // if (_input_props.last_min_v == 114514)
+    // {
+    //     _input_props.last_min_v = _input_props.min_v;
+    //     _input_props.last_max_v = _input_props.max_v;
+    //     _input_props.last_min_a = _input_props.min_a;
+    //     _input_props.last_max_a = _input_props.max_a;
+    //     return;
+    // }
 
     // V chart y range
     if (_input_props.min_v != _input_props.last_min_v || _input_props.max_v != _input_props.last_max_v)
