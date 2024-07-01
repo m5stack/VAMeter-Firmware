@@ -49,7 +49,7 @@ static constexpr int _chart_max_x_range = 240;
 static constexpr int _chart_min_x_range = 30;
 static constexpr int _chart_x_range_step = 30;
 static constexpr float _chart_v_min_y_range = 2;
-static constexpr float _chart_a_min_y_range = 0.005 * _pm_data_a_scale;
+static constexpr float _chart_a_min_y_range = 0.001 * _pm_data_a_scale;
 
 /* -------------------------------------------------------------------------- */
 /*                                    Setup                                   */
@@ -199,7 +199,7 @@ void Waveform::_update_chart_y_zoom(bool applyChartZoom)
         if (_chart_props.current_v_y_range_top - _chart_props.current_v_y_range_bottom < _chart_v_min_y_range)
         {
             auto mid_point = (_input_props.max_v - _input_props.min_v) / 2 + _input_props.min_v;
-            _chart_props.current_v_y_range_top = mid_point + _chart_v_min_y_range / 3;
+            _chart_props.current_v_y_range_top = mid_point + _chart_v_min_y_range / 2;
             _chart_props.current_v_y_range_bottom = _chart_props.current_v_y_range_top - _chart_v_min_y_range;
         }
 
@@ -335,14 +335,19 @@ void Waveform::_render_y_scales()
 
     /* -------------------------------- V scales -------------------------------- */
     {
-        HAL::GetCanvas()->setTextColor(_color_scale_label_a);
+        HAL::GetCanvas()->setTextColor(_color_scale_label_v);
         HAL::GetCanvas()->setTextDatum(middle_left);
 
-        std::array<float, 6> v_scale_list = {0, 2.5, 5, 10, 15, 20};
+        std::vector<float> v_scale_list;
+        v_scale_list.resize(3);
+        v_scale_list[0] = _chart_props.current_v_y_range_top;
+        v_scale_list[1] = (_chart_props.current_v_y_range_top + _chart_props.current_v_y_range_bottom) / 2;
+        v_scale_list[2] = _chart_props.current_v_y_range_bottom;
+
         for (const auto& i : v_scale_list)
         {
             chart_y_buffer = Waveform::_chart_props.chart_v.getChartPoint(0, i).y;
-            _get_string_buffer() = fmt::format("{}{}", i, i == 0 ? "" : "V");
+            _get_string_buffer() = fmt::format("{:.1f}{}", i, i == 0 ? "" : "V");
             HAL::GetCanvas()->drawString(_get_string_buffer().c_str(), 2, chart_y_buffer);
         }
     }
@@ -351,56 +356,40 @@ void Waveform::_render_y_scales()
     HAL::GetCanvas()->setTextColor(_color_scale_label_a);
     HAL::GetCanvas()->setTextDatum(middle_right);
 
-    // Get scale top and unit
-    float scale_top = 0;
     std::string unit;
-
-    // Scales
-    // if (_input_props.max_a < 5)
-    //     scale_top = std::ceil(_input_props.max_a / 0.5) * 0.5;
-    // else
-    //     scale_top = std::ceil(_input_props.max_a / 5) * 5;
-    // spdlog::info("{}", scale_top);
-
-    if (_input_props.max_a < 5)
-        scale_top = std::ceil(_chart_props.current_a_y_range_top / 0.5) * 0.5;
-    else
-        scale_top = std::ceil(_chart_props.current_a_y_range_top / 5) * 5;
-
-    // Get scale
-    std::array<float, 6> a_scale_list;
-    for (int i = 0; i < a_scale_list.size(); i++)
-    {
-        if (i == 0)
-        {
-            a_scale_list[i] = 0;
-            continue;
-        }
-
-        a_scale_list[i] = scale_top / 5 * i;
-        a_scale_list[i] = std::round(a_scale_list[i] * 10) / 10;
-    }
+    std::vector<float> a_scale_list;
+    a_scale_list.resize(3);
+    // spdlog::info("{} {}", _chart_props.current_a_y_range_top, _chart_props.current_a_y_range_bottom);
+    a_scale_list[0] = _chart_props.current_a_y_range_top;
+    a_scale_list[1] = (_chart_props.current_a_y_range_top + _chart_props.current_a_y_range_bottom) / 2;
+    a_scale_list[2] = _chart_props.current_a_y_range_bottom;
 
     HAL::GetCanvas()->setTextColor(_color_scale_label_a);
     HAL::GetCanvas()->setTextDatum(middle_right);
     for (auto& i : a_scale_list)
     {
-        // Scale unit
-        if (i == 0)
-            unit = "";
-        else if (i < 1)
-            unit = "μA";
-        else if (i < 1000)
-            unit = "mA";
-        else
-            unit = "A";
-
         // Get chart y
         chart_y_buffer = Waveform::_chart_props.chart_a.getChartPoint(0, i).y;
 
-        // Scale value
-        if (i < 1)
+        // Scale unit
+        if (std::abs(i) < 1)
+        {
             i *= 1000;
+            unit = "μA";
+        }
+        else if (std::abs(i) < 1000)
+            unit = "mA";
+        else
+        {
+            i /= 1000;
+            unit = "A";
+        }
+
+        // Round
+        i = std::round(i * 10) / 10;
+        if (i == 0)
+            unit = "";
+
         _get_string_buffer() = fmt::format("{}{}", i, unit);
         HAL::GetCanvas()->drawString(_get_string_buffer().c_str(), 237, chart_y_buffer);
     }
@@ -465,6 +454,9 @@ void Waveform::_render_wave()
         // Get chart point
         _chart_props.new_p = _chart_props.chart_v.getChartPoint(static_cast<float>(_chart_props.p_x), value);
         _chart_props.new_p.x -= _chart_props.temp_buffer;
+
+        // Offset to avoid overlap with a wave
+        _chart_props.new_p.y -= 3;
 
         // Render
         if (_chart_props.p_x != 0 && _chart_props.last_p.x <= 240)

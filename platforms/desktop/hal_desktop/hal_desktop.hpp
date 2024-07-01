@@ -159,7 +159,8 @@ public:
         // _pm_data.shuntCurrent = 0.1 * std::sin(sine_x);
         // _pm_data.shuntCurrent = std::abs(std::sin(sine_x));
         _pm_data.shuntCurrent = 0.1 * std::sin(sine_x) + 1 * 0.1;
-        _pm_data.shuntCurrent = 0.1 * std::sin(sine_x) - 1 * 0.1;
+        _pm_data.shuntCurrent = 0.1 * std::sin(sine_x) + 1 * 0.01;
+        _pm_data.shuntCurrent = 0.0001 * std::sin(sine_x);
         // _pm_data.shuntCurrent = (0.1 * std::sin(sine_x) + 1 * 0.1) * 10;
         // _pm_data.shuntCurrent = 0.0001 * std::sin(sine_x) + 1 * 0.001;
         // _pm_data.shuntCurrent = 0.000066;
