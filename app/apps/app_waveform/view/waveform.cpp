@@ -49,7 +49,8 @@ static constexpr int _chart_max_x_range = 240;
 static constexpr int _chart_min_x_range = 30;
 static constexpr int _chart_x_range_step = 30;
 static constexpr float _chart_v_min_y_range = 2;
-static constexpr float _chart_a_min_y_range = 0.001 * _pm_data_a_scale;
+static constexpr float _chart_a_min_y_range_big = 0.01 * _pm_data_a_scale;
+static constexpr float _chart_a_min_y_range_small = 0.001 * _pm_data_a_scale;
 
 /* -------------------------------------------------------------------------- */
 /*                                    Setup                                   */
@@ -75,13 +76,13 @@ Waveform::Waveform(uint32_t themeColor)
 
     _chart_props.chart_v.getZoomTransition().getXTransition().setTransitionPath(EasingPath::easeOutBack);
     _chart_props.chart_v.getZoomTransition().getXTransition().setDuration(400);
-    _chart_props.chart_v.getZoomTransition().getYTransition().setDuration(200);
-    _chart_props.chart_v.getOffsetTransition().setDuration(200);
+    _chart_props.chart_v.getZoomTransition().getYTransition().setDuration(400);
+    _chart_props.chart_v.getOffsetTransition().setDuration(400);
 
     _chart_props.chart_a.getZoomTransition().getXTransition().setTransitionPath(EasingPath::easeOutBack);
     _chart_props.chart_a.getZoomTransition().getXTransition().setDuration(400);
-    _chart_props.chart_a.getZoomTransition().getYTransition().setDuration(200);
-    _chart_props.chart_a.getOffsetTransition().setDuration(200);
+    _chart_props.chart_a.getZoomTransition().getYTransition().setDuration(400);
+    _chart_props.chart_a.getOffsetTransition().setDuration(400);
 
     // _chart_props.chart_v.moveYIntoRange(0, 8);
     // _chart_props.chart_a.moveYIntoRange(0, 0.5 * _pm_data_a_scale);
@@ -226,11 +227,17 @@ void Waveform::_update_chart_y_zoom(bool applyChartZoom)
         _chart_props.current_a_y_range_bottom = _input_props.min_a;
 
         // Min range limit
-        if (_chart_props.current_a_y_range_top - _chart_props.current_a_y_range_bottom < _chart_a_min_y_range)
+        if (_chart_props.current_a_y_range_top - _chart_props.current_a_y_range_bottom < _chart_a_min_y_range_small)
         {
             auto mid_point = (_input_props.max_a - _input_props.min_a) / 2 + _input_props.min_a;
-            _chart_props.current_a_y_range_top = mid_point + _chart_a_min_y_range / 2;
-            _chart_props.current_a_y_range_bottom = _chart_props.current_a_y_range_top - _chart_a_min_y_range;
+            _chart_props.current_a_y_range_top = mid_point + _chart_a_min_y_range_small / 2;
+            _chart_props.current_a_y_range_bottom = _chart_props.current_a_y_range_top - _chart_a_min_y_range_small;
+        }
+        else if (_chart_props.current_a_y_range_top - _chart_props.current_a_y_range_bottom < _chart_a_min_y_range_big)
+        {
+            auto mid_point = (_input_props.max_a - _input_props.min_a) / 2 + _input_props.min_a;
+            _chart_props.current_a_y_range_top = mid_point + _chart_a_min_y_range_big / 2;
+            _chart_props.current_a_y_range_bottom = _chart_props.current_a_y_range_top - _chart_a_min_y_range_big;
         }
 
         // Update range
