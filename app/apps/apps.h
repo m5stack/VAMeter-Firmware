@@ -35,7 +35,7 @@ inline void app_run_startup_anim(MOONCAKE::Mooncake* mooncake)
 
     // delete startup_anim;
 
-    // HAL::GetDisplay()->setBrightness(255);
+    HAL::GetDisplay()->setBrightness(255);
 }
 
 /**

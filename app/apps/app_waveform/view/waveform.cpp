@@ -48,8 +48,8 @@ static constexpr int _guide_line_padding = 240 / _guide_line_num;
 static constexpr int _chart_max_x_range = 240;
 static constexpr int _chart_min_x_range = 30;
 static constexpr int _chart_x_range_step = 30;
-static constexpr float _chart_v_min_y_range = 0.5;
-static constexpr float _chart_a_min_y_range = 0.0001 * _pm_data_a_scale;
+static constexpr float _chart_v_min_y_range = 2;
+static constexpr float _chart_a_min_y_range = 0.005 * _pm_data_a_scale;
 
 /* -------------------------------------------------------------------------- */
 /*                                    Setup                                   */
@@ -69,14 +69,19 @@ Waveform::Waveform(uint32_t themeColor)
 
     // Chart
     _chart_props.chart_v.setOrigin(0, 35);
-    _chart_props.chart_a.setOrigin(0, 45);
+    _chart_props.chart_a.setOrigin(0, 40);
     _chart_props.chart_v.setSize(240, 160);
-    _chart_props.chart_a.setSize(240, 160);
+    _chart_props.chart_a.setSize(240, 165);
 
-    _chart_props.chart_v.getZoomTransition().setTransitionPath(EasingPath::easeOutBack);
-    _chart_props.chart_v.getZoomTransition().setDuration(400);
-    _chart_props.chart_a.getZoomTransition().setTransitionPath(EasingPath::easeOutBack);
-    _chart_props.chart_a.getZoomTransition().setDuration(400);
+    _chart_props.chart_v.getZoomTransition().getXTransition().setTransitionPath(EasingPath::easeOutBack);
+    _chart_props.chart_v.getZoomTransition().getXTransition().setDuration(400);
+    _chart_props.chart_v.getZoomTransition().getYTransition().setDuration(400);
+    _chart_props.chart_v.getOffsetTransition().setDuration(400);
+
+    _chart_props.chart_a.getZoomTransition().getXTransition().setTransitionPath(EasingPath::easeOutBack);
+    _chart_props.chart_a.getZoomTransition().getXTransition().setDuration(400);
+    _chart_props.chart_a.getZoomTransition().getYTransition().setDuration(400);
+    _chart_props.chart_a.getOffsetTransition().setDuration(400);
 
     // _chart_props.chart_v.moveYIntoRange(0, 8);
     // _chart_props.chart_a.moveYIntoRange(0, 0.5 * _pm_data_a_scale);
@@ -175,15 +180,11 @@ void Waveform::_update_chart_x_zoom()
 
 void Waveform::_update_chart_y_zoom()
 {
-    // // If first time
-    // if (_input_props.last_min_v == 114514)
-    // {
-    //     _input_props.last_min_v = _input_props.min_v;
-    //     _input_props.last_max_v = _input_props.max_v;
-    //     _input_props.last_min_a = _input_props.min_a;
-    //     _input_props.last_max_a = _input_props.max_a;
-    //     return;
-    // }
+    // If first time
+    if (_input_props.min_v == 114514)
+    {
+        return;
+    }
 
     // V chart y range
     if (_input_props.min_v != _input_props.last_min_v || _input_props.max_v != _input_props.last_max_v)
@@ -203,8 +204,15 @@ void Waveform::_update_chart_y_zoom()
         }
 
         // Update range
-        // spdlog::info("v {:.2f} {:.2f}", _chart_props.current_v_y_range_bottom, _chart_props.current_v_y_range_top);
+        spdlog::info("v [{:.2f} {:.2f}] [{:.2f} {:.2f}]",
+                     _input_props.min_v,
+                     _input_props.max_v,
+                     _chart_props.current_v_y_range_bottom,
+                     _chart_props.current_v_y_range_top);
         _chart_props.chart_v.moveYIntoRange(_chart_props.current_v_y_range_bottom, _chart_props.current_v_y_range_top);
+
+        _input_props.last_min_v = _input_props.min_v;
+        _input_props.last_max_v = _input_props.max_v;
     }
 
     // A chart y range
@@ -225,15 +233,12 @@ void Waveform::_update_chart_y_zoom()
         }
 
         // Update range
-        // spdlog::info("v {:.2f} {:.2f}", _chart_props.current_a_y_range_bottom, _chart_props.current_a_y_range_top);
+        spdlog::info("a {:.2f} {:.2f}", _chart_props.current_a_y_range_bottom, _chart_props.current_a_y_range_top);
         _chart_props.chart_a.moveYIntoRange(_chart_props.current_a_y_range_bottom, _chart_props.current_a_y_range_top);
-    }
 
-    // Update
-    _input_props.last_min_v = _input_props.min_v;
-    _input_props.last_max_v = _input_props.max_v;
-    _input_props.last_min_a = _input_props.min_a;
-    _input_props.last_max_a = _input_props.max_a;
+        _input_props.last_min_a = _input_props.min_a;
+        _input_props.last_max_a = _input_props.max_a;
+    }
 }
 
 // For recorder view usage, easer to handle here

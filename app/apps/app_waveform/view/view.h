@@ -74,10 +74,10 @@ namespace VIEWS
             float min_a = 114514;
             float max_a = -114514;
 
-            float last_min_v = 0;
-            float last_max_v = 0;
-            float last_min_a = 0;
-            float last_max_a = 0;
+            float last_min_v = 114514;
+            float last_max_v = -114514;
+            float last_min_a = 114514;
+            float last_max_a = -114514;
 
             bool is_paused = false;
             bool update_chart_x = true;
