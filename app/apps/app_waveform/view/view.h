@@ -93,7 +93,7 @@ namespace VIEWS
         void _update_pm_data();
         const uint32_t& _get_pm_data_a_scale();
         void _update_chart_x_zoom();
-        void _update_chart_y_zoom();
+        void _update_chart_y_zoom(bool applyChartZoom = true);
         void _update_chart_y_zoom_with_third_value(const float& thirdV, const float& thirdA);
         virtual void _update_input();
         void _update_transition();

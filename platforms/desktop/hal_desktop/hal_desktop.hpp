@@ -164,10 +164,10 @@ public:
         // _pm_data.shuntCurrent = 0.0001 * std::sin(sine_x) + 1 * 0.001;
         // _pm_data.shuntCurrent = 0.000066;
 
-        _pm_data.shuntCurrent = generateRandomNumber(0.091, 0.089);
+        // _pm_data.shuntCurrent = generateRandomNumber(0.091, 0.089);
 
-        _pm_data.busVoltage = 0;
-        _pm_data.shuntCurrent = 0;
+        // _pm_data.busVoltage = 0;
+        // _pm_data.shuntCurrent = 0;
 
         _pm_data.shuntVoltage = std::cos(sine_x);
         // _pm_data.shuntVoltage = 0;

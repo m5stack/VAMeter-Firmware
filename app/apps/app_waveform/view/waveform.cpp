@@ -69,19 +69,19 @@ Waveform::Waveform(uint32_t themeColor)
 
     // Chart
     _chart_props.chart_v.setOrigin(0, 35);
-    _chart_props.chart_a.setOrigin(0, 40);
-    _chart_props.chart_v.setSize(240, 160);
-    _chart_props.chart_a.setSize(240, 165);
+    _chart_props.chart_a.setOrigin(0, 35);
+    _chart_props.chart_v.setSize(240, 170);
+    _chart_props.chart_a.setSize(240, 170);
 
     _chart_props.chart_v.getZoomTransition().getXTransition().setTransitionPath(EasingPath::easeOutBack);
     _chart_props.chart_v.getZoomTransition().getXTransition().setDuration(400);
-    _chart_props.chart_v.getZoomTransition().getYTransition().setDuration(400);
-    _chart_props.chart_v.getOffsetTransition().setDuration(400);
+    _chart_props.chart_v.getZoomTransition().getYTransition().setDuration(200);
+    _chart_props.chart_v.getOffsetTransition().setDuration(200);
 
     _chart_props.chart_a.getZoomTransition().getXTransition().setTransitionPath(EasingPath::easeOutBack);
     _chart_props.chart_a.getZoomTransition().getXTransition().setDuration(400);
-    _chart_props.chart_a.getZoomTransition().getYTransition().setDuration(400);
-    _chart_props.chart_a.getOffsetTransition().setDuration(400);
+    _chart_props.chart_a.getZoomTransition().getYTransition().setDuration(200);
+    _chart_props.chart_a.getOffsetTransition().setDuration(200);
 
     // _chart_props.chart_v.moveYIntoRange(0, 8);
     // _chart_props.chart_a.moveYIntoRange(0, 0.5 * _pm_data_a_scale);
@@ -178,7 +178,7 @@ void Waveform::_update_chart_x_zoom()
     }
 }
 
-void Waveform::_update_chart_y_zoom()
+void Waveform::_update_chart_y_zoom(bool applyChartZoom)
 {
     // If first time
     if (_input_props.min_v == 114514)
@@ -199,17 +199,18 @@ void Waveform::_update_chart_y_zoom()
         if (_chart_props.current_v_y_range_top - _chart_props.current_v_y_range_bottom < _chart_v_min_y_range)
         {
             auto mid_point = (_input_props.max_v - _input_props.min_v) / 2 + _input_props.min_v;
-            _chart_props.current_v_y_range_top = mid_point + _chart_v_min_y_range / 2;
-            _chart_props.current_v_y_range_bottom = mid_point - _chart_v_min_y_range / 2;
+            _chart_props.current_v_y_range_top = mid_point + _chart_v_min_y_range / 3;
+            _chart_props.current_v_y_range_bottom = _chart_props.current_v_y_range_top - _chart_v_min_y_range;
         }
 
         // Update range
-        spdlog::info("v [{:.2f} {:.2f}] [{:.2f} {:.2f}]",
-                     _input_props.min_v,
-                     _input_props.max_v,
-                     _chart_props.current_v_y_range_bottom,
-                     _chart_props.current_v_y_range_top);
-        _chart_props.chart_v.moveYIntoRange(_chart_props.current_v_y_range_bottom, _chart_props.current_v_y_range_top);
+        // spdlog::info("v [{:.2f} {:.2f}] [{:.2f} {:.2f}]",
+        //              _input_props.min_v,
+        //              _input_props.max_v,
+        //              _chart_props.current_v_y_range_bottom,
+        //              _chart_props.current_v_y_range_top);
+        if (applyChartZoom)
+            _chart_props.chart_v.moveYIntoRange(_chart_props.current_v_y_range_bottom, _chart_props.current_v_y_range_top);
 
         _input_props.last_min_v = _input_props.min_v;
         _input_props.last_max_v = _input_props.max_v;
@@ -229,12 +230,17 @@ void Waveform::_update_chart_y_zoom()
         {
             auto mid_point = (_input_props.max_a - _input_props.min_a) / 2 + _input_props.min_a;
             _chart_props.current_a_y_range_top = mid_point + _chart_a_min_y_range / 2;
-            _chart_props.current_a_y_range_bottom = mid_point - _chart_a_min_y_range / 2;
+            _chart_props.current_a_y_range_bottom = _chart_props.current_a_y_range_top - _chart_a_min_y_range;
         }
 
         // Update range
-        spdlog::info("a {:.2f} {:.2f}", _chart_props.current_a_y_range_bottom, _chart_props.current_a_y_range_top);
-        _chart_props.chart_a.moveYIntoRange(_chart_props.current_a_y_range_bottom, _chart_props.current_a_y_range_top);
+        // spdlog::info("a [{:.2f} {:.2f}] [{:.2f} {:.2f}]",
+        //              _input_props.min_a,
+        //              _input_props.max_a,
+        //              _chart_props.current_a_y_range_bottom,
+        //              _chart_props.current_a_y_range_top);
+        if (applyChartZoom)
+            _chart_props.chart_a.moveYIntoRange(_chart_props.current_a_y_range_bottom, _chart_props.current_a_y_range_top);
 
         _input_props.last_min_a = _input_props.min_a;
         _input_props.last_max_a = _input_props.max_a;
@@ -244,39 +250,22 @@ void Waveform::_update_chart_y_zoom()
 // For recorder view usage, easer to handle here
 void Waveform::_update_chart_y_zoom_with_third_value(const float& thirdV, const float& thirdA)
 {
-    // Update y range to the max value
-    // Unless it's too small
+    // Normale range
+    _update_chart_y_zoom(false);
 
-    /* ------------------------------------ V ----------------------------------- */
-    // Who's bigger
-    float compare_value = _input_props.max_v;
-    if (thirdV > compare_value)
-        compare_value = thirdV;
+    // V
+    if (thirdV < _chart_props.current_v_y_range_bottom)
+        _chart_props.current_v_y_range_bottom = thirdV;
+    else if (thirdV > _chart_props.current_v_y_range_top)
+        _chart_props.current_v_y_range_top = thirdV;
+    _chart_props.chart_v.moveYIntoRange(_chart_props.current_v_y_range_bottom, _chart_props.current_v_y_range_top);
 
-    if (compare_value != _chart_props.current_v_y_range_top)
-    {
-        if (compare_value < _chart_v_min_y_range)
-            _chart_props.current_v_y_range_top = _chart_v_min_y_range;
-        else
-            _chart_props.current_v_y_range_top = compare_value;
-
-        _chart_props.chart_v.moveYIntoRange(0, _chart_props.current_v_y_range_top);
-    }
-
-    /* ------------------------------------ A ----------------------------------- */
-    compare_value = _input_props.max_a;
-    if (thirdA > compare_value)
-        compare_value = thirdA;
-
-    if (compare_value != _chart_props.current_a_y_range_top)
-    {
-        if (compare_value < _chart_a_min_y_range)
-            _chart_props.current_a_y_range_top = _chart_a_min_y_range;
-        else
-            _chart_props.current_a_y_range_top = compare_value;
-
-        _chart_props.chart_a.moveYIntoRange(0, _chart_props.current_a_y_range_top);
-    }
+    // A
+    if (thirdA < _chart_props.current_a_y_range_bottom)
+        _chart_props.current_a_y_range_bottom = thirdA;
+    else if (thirdA > _chart_props.current_a_y_range_top)
+        _chart_props.current_a_y_range_top = thirdA;
+    _chart_props.chart_a.moveYIntoRange(_chart_props.current_a_y_range_bottom, _chart_props.current_a_y_range_top);
 }
 
 void Waveform::_update_input()
