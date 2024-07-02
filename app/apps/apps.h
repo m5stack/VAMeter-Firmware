@@ -23,19 +23,19 @@
  */
 inline void app_run_startup_anim(MOONCAKE::Mooncake* mooncake)
 {
-    // auto startup_anim = new MOONCAKE::APPS::AppStartupAnim_Packer;
+    auto startup_anim = new MOONCAKE::APPS::AppStartupAnim_Packer;
 
-    // mooncake->createAndStartApp(startup_anim);
-    // while (1)
-    // {
-    //     mooncake->update();
-    //     if (mooncake->getAppManager()->getCreatedAppNum() == 0)
-    //         break;
-    // }
+    mooncake->createAndStartApp(startup_anim);
+    while (1)
+    {
+        mooncake->update();
+        if (mooncake->getAppManager()->getCreatedAppNum() == 0)
+            break;
+    }
 
-    // delete startup_anim;
+    delete startup_anim;
 
-    HAL::GetDisplay()->setBrightness(255);
+    // HAL::GetDisplay()->setBrightness(255);
 }
 
 /**
@@ -45,8 +45,8 @@ inline void app_run_startup_anim(MOONCAKE::Mooncake* mooncake)
  */
 inline void app_install_launcher(MOONCAKE::Mooncake* mooncake)
 {
-    // auto launcher = new MOONCAKE::APPS::AppLauncher_Packer;
-    auto launcher = new MOONCAKE::APPS::AppWaveform_Packer;
+    auto launcher = new MOONCAKE::APPS::AppLauncher_Packer;
+    // auto launcher = new MOONCAKE::APPS::AppWaveform_Packer;
     mooncake->installApp(launcher);
     mooncake->createAndStartApp(launcher);
 }

@@ -1,8 +1,8 @@
 /*
-* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
-*
-* SPDX-License-Identifier: MIT
-*/
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+ *
+ * SPDX-License-Identifier: MIT
+ */
 #include "../hal_vameter.h"
 #include "../hal_config.h"
 #include <cstdint>
@@ -238,10 +238,16 @@ void _set_pm_data_daemon_current_offset(const float& offset)
     xSemaphoreGive(_pm_data_handle_mutex);
 }
 
+static bool _is_reverse_measuring = false;
+
 static void _handle_basic_data_update()
 {
     _pm_data_daemon->busVoltage = _ina226_hc->readBusVoltage();
     _pm_data_daemon->busPower = _ina226_hc->readBusPower();
+
+    // spdlog::info("{} {}", _ina226_lc->readShuntVoltage(), _ina226_hc->readShuntCurrent());
+
+HELL:
     if (_is_low_current_mode)
     {
         _pm_data_daemon->shuntVoltage = _ina226_lc->readShuntVoltage();
@@ -249,6 +255,17 @@ static void _handle_basic_data_update()
         // It should be the same, but readShuntCurrent() not
         // _pm_data_daemon->shuntCurrent = _ina226_lc->readShuntCurrent();
         _pm_data_daemon->shuntCurrent = _pm_data_daemon->shuntVoltage;
+
+        // If lower than 1mA, start reverse measuring
+        if (_pm_data_daemon->shuntCurrent < -0.005)
+        {
+            spdlog::info("start reverse measuring {:.7f}", _ina226_lc->readShuntVoltage());
+            _is_reverse_measuring = true;
+
+            // Go high current mode
+            _isr_switch_to_hc_mode((void*)&_is_low_current_mode);
+            goto HELL;
+        }
 
         // Apply calibration
         _pm_data_daemon->shuntCurrent -= _pm_data_daemon_current_offset;
@@ -259,6 +276,21 @@ static void _handle_basic_data_update()
     {
         _pm_data_daemon->shuntVoltage = _ina226_hc->readShuntVoltage();
         _pm_data_daemon->shuntCurrent = _ina226_hc->readShuntCurrent();
+
+        // If higher than 1mA, quit reverse measuring
+        if (_is_reverse_measuring && _pm_data_daemon->shuntCurrent > -0.003)
+        {
+            spdlog::info("quit reverse measuring {:.7f}", _ina226_lc->readShuntVoltage());
+            _is_reverse_measuring = false;
+
+            // If under lc mode limit, change back to low current mode
+            if (_pm_data_daemon->shuntCurrent < 0.05)
+            {
+                _isr_switch_to_lc_mode((void*)&_is_low_current_mode);
+                goto HELL;
+            }
+            // If not, interrupt will change to high current mode for us
+        }
     }
 }
 
