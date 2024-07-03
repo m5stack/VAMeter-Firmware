@@ -266,7 +266,8 @@ void Waveform::_update_chart_y_zoom_with_third_value(const float& thirdV, const 
     else if (thirdV > _chart_props.current_v_y_range_top)
         _chart_props.current_v_y_range_top = thirdV;
     // spdlog::info("v {} {}", _chart_props.current_v_y_range_bottom, _chart_props.current_v_y_range_top);
-    _chart_props.chart_v.moveYIntoRange(_chart_props.current_v_y_range_bottom, _chart_props.current_v_y_range_top);
+    if (_chart_props.current_v_y_range_bottom != _chart_props.current_v_y_range_top)
+        _chart_props.chart_v.moveYIntoRange(_chart_props.current_v_y_range_bottom, _chart_props.current_v_y_range_top);
 
     // A
     if (thirdA < _chart_props.current_a_y_range_bottom)
@@ -274,7 +275,8 @@ void Waveform::_update_chart_y_zoom_with_third_value(const float& thirdV, const 
     else if (thirdA > _chart_props.current_a_y_range_top)
         _chart_props.current_a_y_range_top = thirdA;
     // spdlog::info("a {} {}", _chart_props.current_v_y_range_bottom, _chart_props.current_v_y_range_top);
-    _chart_props.chart_a.moveYIntoRange(_chart_props.current_a_y_range_bottom, _chart_props.current_a_y_range_top);
+    if (_chart_props.current_a_y_range_bottom != _chart_props.current_a_y_range_top)
+        _chart_props.chart_a.moveYIntoRange(_chart_props.current_a_y_range_bottom, _chart_props.current_a_y_range_top);
 }
 
 void Waveform::_update_input()
