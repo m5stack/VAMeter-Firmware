@@ -1,8 +1,8 @@
 /*
-* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
-*
-* SPDX-License-Identifier: MIT
-*/
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+ *
+ * SPDX-License-Identifier: MIT
+ */
 #pragma once
 #include "spdlog/spdlog.h"
 #include <cmath>
@@ -159,9 +159,16 @@ public:
         // _pm_data.shuntCurrent = 0.1 * std::sin(sine_x);
         // _pm_data.shuntCurrent = std::abs(std::sin(sine_x));
         _pm_data.shuntCurrent = 0.1 * std::sin(sine_x) + 1 * 0.1;
+        _pm_data.shuntCurrent = 0.1 * std::sin(sine_x) + 1 * 0.01;
+        _pm_data.shuntCurrent = 0.0001 * std::sin(sine_x);
         // _pm_data.shuntCurrent = (0.1 * std::sin(sine_x) + 1 * 0.1) * 10;
         // _pm_data.shuntCurrent = 0.0001 * std::sin(sine_x) + 1 * 0.001;
         // _pm_data.shuntCurrent = 0.000066;
+
+        // _pm_data.shuntCurrent = generateRandomNumber(0.091, 0.089);
+
+        // _pm_data.busVoltage = 0;
+        // _pm_data.shuntCurrent = 0;
 
         _pm_data.shuntVoltage = std::cos(sine_x);
         // _pm_data.shuntVoltage = 0;

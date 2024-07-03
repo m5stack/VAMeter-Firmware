@@ -1,8 +1,8 @@
 /*
-* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
-*
-* SPDX-License-Identifier: MIT
-*/
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+ *
+ * SPDX-License-Identifier: MIT
+ */
 #pragma once
 #include "app_base_test/app_base_test.h"
 #include "app_launcher/app_launcher.h"
@@ -46,8 +46,9 @@ inline void app_run_startup_anim(MOONCAKE::Mooncake* mooncake)
 inline void app_install_launcher(MOONCAKE::Mooncake* mooncake)
 {
     auto launcher = new MOONCAKE::APPS::AppLauncher_Packer;
+    // auto launcher = new MOONCAKE::APPS::AppWaveform_Packer;
     mooncake->installApp(launcher);
-    mooncake->createApp(launcher);
+    mooncake->createAndStartApp(launcher);
 }
 
 /**
