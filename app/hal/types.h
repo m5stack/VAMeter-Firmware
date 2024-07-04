@@ -211,7 +211,7 @@ namespace OTA_UPGRADE
 /* -------------------------------------------------------------------------- */
 typedef std::function<void(const std::string& log, bool pushScreen, bool clear)> OnLogPageRenderCallback_t;
 
-#define APP_VERSION "V1.2.1"
+#define APP_VERSION "V1.2.2"
 
 /* -------------------------------------------------------------------------- */
 /*                                  NVS keys                                  */

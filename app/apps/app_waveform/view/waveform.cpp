@@ -179,10 +179,12 @@ void Waveform::_update_chart_x_zoom()
     }
 }
 
+static uint8_t _first_few_update_count = 0;
+
 void Waveform::_update_chart_y_zoom(bool applyChartZoom)
 {
     // If first time
-    if (_input_props.min_v == 114514)
+    if (_input_props.min_v == 114514 || _input_props.min_a == 114514)
     {
         return;
     }
@@ -240,7 +242,7 @@ void Waveform::_update_chart_y_zoom(bool applyChartZoom)
             _chart_props.current_a_y_range_bottom = _chart_props.current_a_y_range_top - _chart_a_min_y_range_big;
         }
 
-        // Update range
+        // // Update range
         // spdlog::info("a [{:.2f} {:.2f}] [{:.2f} {:.2f}]",
         //              _input_props.min_a,
         //              _input_props.max_a,
@@ -502,7 +504,7 @@ void Waveform::_render_wave()
     _chart_props.p_x = 0;
     _chart_props.last_p.reset();
     _chart_props.stop_render = false;
-    _input_props.max_a = 0;
+    _input_props.max_a = -114514;
     _input_props.min_a = 114514;
     _input_props.pm_data_buffer_a.peekAll([&](const float& value) {
         // Pass if out of range
