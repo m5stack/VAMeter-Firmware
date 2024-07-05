@@ -14,6 +14,7 @@
 
 using namespace MOONCAKE::APPS;
 using namespace SYSTEM::INPUTS;
+using namespace SYSTEM::UI;
 using namespace VIEWS;
 
 const char* AppPower_monitor_Packer::getAppName() { return AssetPool::GetText().AppName_PowerMonitor; }
@@ -76,6 +77,7 @@ void AppPower_monitor::onRunning()
 
 void AppPower_monitor::onDestroy()
 {
+    NotificationBubble::Free();
     spdlog::info("{} onDestroy", getAppName());
     delete _data.view;
 }
