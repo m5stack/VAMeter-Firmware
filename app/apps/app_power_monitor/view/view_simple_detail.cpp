@@ -1,8 +1,8 @@
 /*
-* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
-*
-* SPDX-License-Identifier: MIT
-*/
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+ *
+ * SPDX-License-Identifier: MIT
+ */
 #include "view.h"
 #include "../../../hal/hal.h"
 #include "../../../assets/assets.h"
@@ -43,6 +43,9 @@ void PmDataPage::goSimpleDetailPage()
     /*                                   Voltage                                  */
     /* -------------------------------------------------------------------------- */
     _data.transition_list_buffer[0].setUpdateCallback([&](Transition2D* transition) {
+        HAL::GetCanvas()->setTextColor(AssetPool::GetColor().AppPowerMonitor.pageSimpleDetailText);
+        HAL::GetCanvas()->setTextSize(1);
+
         HAL::GetCanvas()->fillSmoothRoundRect(transition->getValue().x,
                                               transition->getValue().y,
                                               _panel_width,

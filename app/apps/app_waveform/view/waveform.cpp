@@ -16,6 +16,7 @@
 using namespace SmoothUIToolKit;
 using namespace SmoothUIToolKit::Chart;
 using namespace SYSTEM::INPUTS;
+using namespace SYSTEM::UI;
 using namespace VIEWS;
 
 // TODO
@@ -614,7 +615,10 @@ void Waveform::_update_render(bool pushBuffer, bool renderPanel, bool renderXSca
         // HAL::RenderFpsPanel();
 #endif
     if (pushBuffer)
+    {
+        NotificationBubble::UpdateAndRender();
         HAL::CanvasUpdate();
+    }
 }
 
 /* -------------------------------------------------------------------------- */

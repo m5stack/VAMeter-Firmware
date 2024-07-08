@@ -42,6 +42,8 @@ void PmDataPage::goMoreDetailPage()
 
     /* ---------------------------- Avg current in 1s --------------------------- */
     _data.transition_list_buffer[0].setUpdateCallback([&](Transition2D* transition) {
+        AssetPool::LoadFont16(HAL::GetCanvas());
+
         HAL::GetCanvas()->fillRect(transition->getValue().x,
                                    transition->getValue().y - 1,
                                    HAL::GetCanvas()->width(),

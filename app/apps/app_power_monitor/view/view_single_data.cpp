@@ -13,6 +13,7 @@
 
 using namespace VIEWS;
 using namespace SYSTEM::INPUTS;
+using namespace SYSTEM::UI;
 using namespace SmoothUIToolKit;
 
 /* -------------------------------------------------------------------------- */
@@ -77,6 +78,7 @@ void PmDataPage::update(uint32_t currentTime)
             HAL::GetCanvas()->fillScreen(Rgb2Hex(_data.bg_color.getValue()));
             for (auto& i : _data.transition_list_buffer)
                 i.update(currentTime);
+            NotificationBubble::UpdateAndRender();
             HAL::CanvasUpdate();
         }
         // Single data page
@@ -93,6 +95,7 @@ void PmDataPage::update(uint32_t currentTime)
         if (Button::Encoder()->wasHold())
         {
             HAL::SetBaseRelay(!HAL::GetBaseRelayState());
+            NotificationBubble::Push(HAL::GetBaseRelayState() ? "Relay ON" : "Relay OFF");
         }
 
         // Check quit
@@ -164,5 +167,6 @@ void PmDataPage::_render()
 #ifdef ESP_PLATFORM
     // HAL::RenderFpsPanel();
 #endif
+    NotificationBubble::UpdateAndRender();
     HAL::CanvasUpdate();
 }
