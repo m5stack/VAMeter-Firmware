@@ -310,4 +310,8 @@ public:
     }
 
     // std::string getSystemConfigUrl() override { return "http://127.0.0.1/syscfg"; }
+
+    bool _relay_state = false;
+    void setBaseRelay(bool state) override { _relay_state = state; }
+    bool getBaseRelayState() override { return _relay_state; }
 };

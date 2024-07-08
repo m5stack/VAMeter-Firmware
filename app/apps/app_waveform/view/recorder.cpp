@@ -1,8 +1,8 @@
 /*
-* SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
-*
-* SPDX-License-Identifier: MIT
-*/
+ * SPDX-FileCopyrightText: 2024 M5Stack Technology CO LTD
+ *
+ * SPDX-License-Identifier: MIT
+ */
 #include "lgfx/v1/misc/enum.hpp"
 #include "view.h"
 #include "../../../hal/hal.h"
@@ -21,6 +21,7 @@
 using namespace SmoothUIToolKit;
 using namespace VIEWS;
 using namespace SYSTEM::INPUTS;
+using namespace SYSTEM::UI;
 
 WaveFormRecorder::~WaveFormRecorder()
 {
@@ -71,7 +72,8 @@ void WaveFormRecorder::update()
 
     if (Button::Encoder()->wasHold())
     {
-      HAL::SetBaseRelay(!HAL::GetBaseRelayState());
+        HAL::SetBaseRelay(!HAL::GetBaseRelayState());
+        NotificationBubble::Push(HAL::GetBaseRelayState() ? "Relay ON" : "Relay OFF");
     }
 
     // Check quit
@@ -217,6 +219,7 @@ void WaveFormRecorder::_handle_render()
         _data.config_panel->render();
     }
 
+    NotificationBubble::UpdateAndRender();
     HAL::CanvasUpdate();
 }
 

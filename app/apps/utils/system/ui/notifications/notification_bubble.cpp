@@ -19,6 +19,8 @@ static constexpr int _panel_y = 16;
 static constexpr int _panel_w = 220;
 static constexpr int _panel_h = 48;
 static constexpr int _panel_r = 15;
+static const uint32_t _panel_bg_color = 0x334464;
+static const uint32_t _panel_label_color = 0xFFFFFF;
 
 void NotificationBubble::onReset() { _data.duration_count = HAL::Millis(); }
 
@@ -49,7 +51,7 @@ void NotificationBubble::onUpdate()
 
     if (HAL::Millis() - _data.duration_count > _data.duration)
     {
-        spdlog::info("bubble timeout");
+        // spdlog::info("bubble timeout");
         hide();
     }
 }
@@ -60,12 +62,12 @@ void NotificationBubble::onRender()
 
     // Panel
     auto frame = getTransition().getValue();
-    HAL::GetCanvas()->fillSmoothRoundRect(frame.x, frame.y, frame.w, frame.h, _panel_r, TFT_WHITE);
+    HAL::GetCanvas()->fillSmoothRoundRect(frame.x, frame.y, frame.w, frame.h, _panel_r, _panel_bg_color);
 
     // Msg
     if (isHidding())
         return;
-    HAL::GetCanvas()->setTextColor((uint32_t)0x3C3C3C);
+    HAL::GetCanvas()->setTextColor(_panel_label_color);
     HAL::GetCanvas()->setTextDatum(middle_center);
     HAL::GetCanvas()->setTextSize(1);
     HAL::GetCanvas()->drawString(_data.msg.c_str(), frame.x + frame.w / 2, frame.y + frame.h / 2 + 1);
@@ -81,7 +83,7 @@ static NotificationBubble* _bubble = nullptr;
 
 void NotificationBubble::Push(std::string msg, uint32_t duration)
 {
-    spdlog::info("push notify: {}, {}", msg, duration);
+    // spdlog::info("push notify: {}, {}", msg, duration);
 
     if (_bubble != nullptr)
         delete _bubble;
@@ -102,7 +104,7 @@ void NotificationBubble::UpdateAndRender()
     // Auto free
     if (_bubble->isHidden())
     {
-        spdlog::info("free bubble");
+        // spdlog::info("free bubble");
         delete _bubble;
         _bubble = nullptr;
     }

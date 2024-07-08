@@ -35,7 +35,7 @@ namespace SYSTEM
             void config(std::string msg, uint32_t duration);
 
         public:
-            static void Push(std::string msg, uint32_t duration = 1500);
+            static void Push(std::string msg, uint32_t duration = 1200);
             static void UpdateAndRender();
             static void Free();
         };

@@ -54,6 +54,7 @@ void AppWaveform::onDestroy()
 {
     spdlog::info("{} onDestroy", getAppName());
     delete _data.view;
+    NotificationBubble::Free();
 }
 
 void AppWaveform::_handle_recording_finished()
