@@ -36,6 +36,12 @@ namespace MOONCAKE
             void _setup_page_more_detail();
 
         public:
+            // Default constructor
+            AppPower_monitor() = default;
+            // Delete copy constructor and assignment operator to prevent double-free
+            AppPower_monitor(const AppPower_monitor&) = delete;
+            AppPower_monitor& operator=(const AppPower_monitor&) = delete;
+
             void onResume() override;
             void onRunning() override;
             void onDestroy() override;

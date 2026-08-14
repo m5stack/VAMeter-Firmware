@@ -25,6 +25,12 @@ namespace MOONCAKE
             void _handle_recording_finished();
 
         public:
+            // Default constructor
+            AppWaveform() = default;
+            // Delete copy constructor and assignment operator to prevent double-free
+            AppWaveform(const AppWaveform&) = delete;
+            AppWaveform& operator=(const AppWaveform&) = delete;
+
             void onResume() override;
             void onRunning() override;
             void onDestroy() override;
