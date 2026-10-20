@@ -38,7 +38,7 @@ python ./fetch_repos.py
 #### Tool Chains
 
 ```bash
-sudo apt install build-essential cmake
+sudo apt install build-essential cmake libsdl2-dev
 ```
 
 #### Build
